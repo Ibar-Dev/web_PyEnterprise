@@ -1,0 +1,194 @@
+/* From Uiverse.io by SouravBandyopadhyay */ 
+.card-title {
+  color: #262626;
+  font-size: 1.5em;
+  line-height: normal;
+  font-weight: 700;
+  margin-bottom: 0.5em;
+}
+
+.small-desc {
+  font-size: 1em;
+  font-weight: 400;
+  line-height: 1.5em;
+  color: #452c2c;
+}
+
+.go-corner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  width: 2em;
+  height: 2em;
+  overflow: hidden;
+  top: 0;
+  right: 0;
+  background: linear-gradient(135deg, #6293c8, #384c6c);
+  border-radius: 0 4px 0 32px;
+}
+
+.go-arrow {
+  margin-top: -4px;
+  margin-right: -4px;
+  color: white;
+  font-family: courier, sans;
+}
+
+.card {
+  display: block;
+  position: relative;
+  max-width: 300px;
+  max-height: 320px;
+  background-color: #f2f8f9;
+  border-radius: 10px;
+  padding: 2em 1.2em;
+  margin: 12px;
+  text-decoration: none;
+  z-index: 0;
+  overflow: hidden;
+  background: linear-gradient(to bottom, #c3e6ec, #a7d1d9);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.card:before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: -16px;
+  right: -16px;
+  background: linear-gradient(135deg, #364a60, #384c6c);
+  height: 32px;
+  width: 32px;
+  border-radius: 32px;
+  transform: scale(1);
+  transform-origin: 50% 50%;
+  transition: transform 0.35s ease-out;
+}
+
+.card:hover:before {
+  transform: scale(28);
+}
+
+.card:hover .small-desc {
+  transition: all 0.5s ease-out;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.card:hover .card-title {
+  transition: all 0.5s ease-out;
+  color: #ffffff;
+}
+
+/* From Uiverse.io by joe-watson-sbf - Personalizado para PyLink */ 
+.flip-card {
+  background-color: transparent;
+  width: 280px;
+  height: 360px;
+  perspective: 1000px;
+  font-family: sans-serif;
+  margin: 1rem;
+}
+
+.title {
+  font-size: 1.5em;
+  font-weight: 900;
+  text-align: center;
+  margin: 0;
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card-front, .flip-card-back {
+  box-shadow: 0 12px 25px 0 rgba(59, 130, 246, 0.3);
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border: 2px solid #3b82f6;
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+}
+
+.flip-card-front {
+  background: linear-gradient(135deg, #e0f2fe 0%, #b3e5fc 50%, #81d4fa 100%);
+  color: #1e40af;
+}
+
+.flip-card-back {
+  background: linear-gradient(135deg, #3b82f6 0%, #1e40af 50%, #1e3a8a 100%);
+  color: white;
+  transform: rotateY(180deg);
+}
+
+.employee-photo {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #3b82f6, #00d4ff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem auto;
+  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: white;
+}
+
+/* From Uiverse.io by Web-Potato - Botones 3D para navegación */ 
+.nav-button {
+  padding: 0.1em 0.25em;
+  width: 8em;
+  height: 3.2em;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(0, 212, 255, 0.1));
+  border: 0.08em solid rgba(255, 255, 255, 0.3);
+  border-radius: 0.3em;
+  font-size: 12px;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+}
+
+.nav-button .nav-span {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  bottom: 0.4em;
+  width: 100%;
+  height: 2.2em;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(0, 212, 255, 0.2));
+  border-radius: 0.2em;
+  font-size: 1.2em;
+  color: #fff;
+  border: 0.08em solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 0.4em 0.1em 0.019em rgba(255, 255, 255, 0.3);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.nav-button .nav-span:hover {
+  transition: all 0.3s ease;
+  transform: translate(0, 0.4em);
+  box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.3);
+  background: linear-gradient(135deg, #3b82f6, #00d4ff);
+}
+
+.nav-button .nav-span:not(:hover) {
+  transition: all 0.5s ease;
+}
