@@ -49,7 +49,7 @@ def footer() -> rx.Component:
                 
                 # Copyright
                 rx.text(
-                    f"© 2024 PyLink. Construyendo el futuro, un proyecto a la vez.",
+                    f"© 2025 PyLink. Construyendo el futuro, un proyecto a la vez.",
                     color="rgba(255, 255, 255, 0.5)",
                     font_size="0.9rem",
                     text_align="center",
@@ -62,7 +62,7 @@ def footer() -> rx.Component:
             margin="0 auto",
             padding="3rem 2rem",
         ),
-        background="rgba(255, 255, 255, 0.05)",
+        background="rgba(30, 41, 59, 0.95)",
         backdrop_filter="blur(10px)",
         border_top="1px solid rgba(255, 255, 255, 0.1)",
     )

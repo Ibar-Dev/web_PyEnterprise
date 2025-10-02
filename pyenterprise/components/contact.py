@@ -34,7 +34,7 @@ def contact_section() -> rx.Component:
                     rx.box(
                         rx.vstack(
                             rx.box(
-                                rx.icon(tag="email", size=40, color=COLORS["primary"]),
+                                rx.icon(tag="mail", size=40, color=COLORS["primary"]),
                                 padding="1.5rem",
                                 background=f"linear-gradient(135deg, {COLORS['primary']}, #00d4ff)",
                                 border_radius="20px",

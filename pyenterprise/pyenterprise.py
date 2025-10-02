@@ -11,6 +11,9 @@ from .components.about import about_section
 from .components.team import team_section
 from .components.contact import contact_section
 from .components.footer import footer
+from .components.employee_auth import employee_login_page, EmployeeAuthState
+
+
 
 
 def index() -> rx.Component:
@@ -35,6 +38,35 @@ def index() -> rx.Component:
     )
 
 
+def empleados_login() -> rx.Component:
+    """Página de login para empleados."""
+    return employee_login_page()
+
+
+def empleados_dashboard() -> rx.Component:
+    """Dashboard de empleados - requiere autenticación."""
+    return rx.cond(
+        EmployeeAuthState.is_authenticated,
+        rx.box(
+            rx.heading("Dashboard - En desarrollo", size="5"),
+            rx.text(EmployeeAuthState.employee_name),
+            rx.text(EmployeeAuthState.employee_role),
+            rx.text(EmployeeAuthState.employee_id),
+            rx.button(
+                "Cerrar Sesión",
+                on_click=EmployeeAuthState.logout,
+                background="red",
+                color="white",
+            ),
+            padding="2rem",
+        ),
+        rx.box(
+            rx.heading("Acceso Denegado"),
+            rx.text("Por favor inicia sesión"),
+        )
+    )
+
+
 
 # Configuración de la aplicación
 app = rx.App(
@@ -46,6 +78,9 @@ app = rx.App(
     ]
 )
 
+# Rutas de la aplicación
 app.add_page(index, route="/", title="PyLink - Conectando tu negocio con el futuro digital")
+app.add_page(empleados_login, route="/empleados", title="PyLink - Login Empleados")
+app.add_page(empleados_dashboard, route="/empleados/dashboard", title="PyLink - Dashboard")
 
 # La aplicación está lista para ejecutarse
