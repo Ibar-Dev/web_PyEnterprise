@@ -17,6 +17,7 @@ COLORS = {
     "success": "#10b981",      # Verde
     "warning": "#f59e0b",      # Naranja
     "error": "#ef4444",        # Rojo
+    "info": "#06b6d4",         # Cyan/Info
 }
 
 # Estilos base

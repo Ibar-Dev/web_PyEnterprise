@@ -1,157 +1,198 @@
-# PyEnterprise - Página Web Empresarial
+# 🚀 PyLink - Sistema de Gestión Empresarial
 
-Una página web moderna y profesional para PyEnterprise, desarrollada con **Reflex** (Python).
-
-## 🚀 Características
-
-### Frontend
-- **Diseño Moderno**: Interfaz limpia y profesional
-- **Responsive**: Optimizada para todos los dispositivos
-- **Componentes Modulares**: Arquitectura escalable y mantenible
-- **SEO Optimizada**: Estructura pensada para motores de búsqueda
-- **Performance**: Carga rápida y experiencia fluida
-
-### Backend
-- **Base de Datos**: SQLite/PostgreSQL con SQLAlchemy
-- **API REST**: Endpoints para gestión de contactos y contenido
-- **Panel Admin**: Dashboard para gestión de contactos y configuración
-- **Email**: Sistema de notificaciones automático
-- **Modelos**: Contact, Service, Project, BlogPost
-
-## 📋 Secciones
-
-- **Hero Section**: Presentación principal con CTAs
-- **Sobre Nosotros**: Información de la empresa, misión y visión
-- **Servicios**: Catálogo completo de servicios oferecidos
-- **Contacto**: Formulario funcional y información de contacto
-- **Footer**: Enlaces adicionales y redes sociales
-
-## 🛠️ Tecnologías
-
-### Frontend
-- **Reflex**: Framework Python para aplicaciones web fullstack
-- **CSS3**: Estilos modernos y animaciones
-- **Font Awesome**: Iconografía profesional
-- **Google Fonts**: Tipografía Inter
-
-### Backend
-- **Python 3.8+**: Lenguaje de programación
-- **SQLAlchemy**: ORM para base de datos
-- **SQLite/PostgreSQL**: Base de datos
-- **SMTP**: Sistema de emails
-- **python-dotenv**: Gestión de variables de entorno
-
-## 📦 Instalación
-
-1. **Clonar el repositorio**:
-   ```bash
-   git clone <repository-url>
-   cd web_PyEnterprise
-   ```
-
-2. **Crear entorno virtual**:
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # En Windows: venv\\Scripts\\activate
-   ```
-
-3. **Instalar dependencias**:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-4. **Inicializar Reflex**:
-   ```bash
-   reflex init
-   ```
-
-5. **Ejecutar la aplicación**:
-   ```bash
-   reflex run
-   ```
-
-6. **Poblar con datos de muestra** (opcional):
-   ```bash
-   python seed_data.py
-   ```
-
-La aplicación estará disponible en:
-- **Frontend**: `http://localhost:3000`
-- **Admin Panel**: `http://localhost:3000/admin`
+Sistema completo de gestión de proyectos, tareas y empleados desarrollado con Python, Reflex y Supabase.
 
 ## 📁 Estructura del Proyecto
 
 ```
 web_PyEnterprise/
-├── pyenterprise/
-│   ├── __init__.py
-│   ├── pyenterprise.py          # Aplicación principal
-│   ├── styles.py               # Estilos globales
-│   └── components/             # Componentes modulares
-│       ├── __init__.py
-│       ├── navbar.py           # Navegación
-│       ├── hero.py             # Sección hero
-│       ├── about.py            # Sobre nosotros
-│       ├── services.py         # Servicios
-│       ├── contact.py          # Contacto
-│       └── footer.py           # Pie de página
-├── assets/                     # Recursos estáticos
-│   └── logo.png               # Logo de la empresa
-├── requirements.txt            # Dependencias
-├── rxconfig.py                # Configuración de Reflex
-└── README.md                  # Este archivo
+├── docs/                          # 📄 Documentación
+│   ├── CAMBIOS_REALIZADOS.md      # Registro de cambios recientes
+│   ├── database_schema.md         # Esquema de la base de datos
+│   ├── DOCUMENTACION_COMPLETA.md  # Documentación completa del sistema
+│   ├── ESTRUCTURA.md              # Estructura del proyecto
+│   ├── GETTING_STARTED.md         # Guía de inicio rápido
+│   └── GUIA_RAPIDA.md             # Guía de uso rápida
+│
+├── pyenterprise/                  # 💻 Código principal
+│   ├── components/                # 🎨 Componentes del frontend
+│   │   ├── admin_panel_profesional.py
+│   │   ├── employee_auth.py
+│   │   ├── employee_dashboard_integrated.py
+│   │   └── ...
+│   ├── database/                  # 🗄️ Backend y acceso a datos
+│   │   ├── __init__.py
+│   │   └── supabase_client.py
+│   ├── pyenterprise.py            # App principal
+│   └── styles.py                  # Estilos globales
+│
+├── tests/                         # 🧪 Tests del sistema
+│   ├── test_backend_completo.py
+│   ├── test_login.py
+│   ├── test_sistema_completo.py
+│   └── test_supabase.py
+│
+├── scripts/                       # 🛠️ Scripts auxiliares
+│   ├── agregar_datos_prueba.py    # Agregar datos de prueba
+│   ├── asignar_admin_proyecto.py  # Asignar admin a proyecto
+│   ├── fix_passwords.py           # Actualizar contraseñas
+│   ├── seed_data.py               # Seed de datos iniciales
+│   └── manage.py                  # Script de gestión
+│
+├── .web/                          # 📦 Build de Reflex (generado)
+├── assets/                        # 🖼️ Assets estáticos
+├── .env                           # 🔐 Variables de entorno
+├── .env.example                   # 📋 Ejemplo de variables de entorno
+├── .gitignore                     # 🚫 Archivos ignorados por Git
+├── app.py                         # 🚀 Entry point de la aplicación
+├── LICENSE                        # 📜 Licencia
+├── requirements.txt               # 📦 Dependencias de Python
+├── rxconfig.py                    # ⚙️ Configuración de Reflex
+└── setup.py                       # 📦 Setup de instalación
 ```
 
-## 🎨 Personalización
+## 🚀 Inicio Rápido
 
-### Colores y Estilos
-Los colores principales se definen en `pyenterprise/styles.py`:
-- Primario: `#2563eb` (Azul empresarial)
-- Secundario: `#1e40af` (Azul oscuro)
-- Accent: `#3b82f6` (Azul claro)
-
-### Contenido
-Cada componente es fácilmente personalizable:
-- **Hero**: Editar `components/hero.py` para cambiar el mensaje principal
-- **Servicios**: Modificar `components/services.py` para ajustar servicios oferecidos
-- **Contacto**: Personalizar `components/contact.py` con tu información
-
-### Logo y Assets
-- Reemplaza `assets/logo.png` con tu logo empresarial
-- Añade más imágenes en la carpeta `assets/`
-
-## 🚀 Despliegue
-
-### Desarrollo
+### 1. **Clonar el repositorio**
 ```bash
-reflex run --env dev
+git clone <url-del-repo>
+cd web_PyEnterprise
 ```
 
-### Producción
+### 2. **Instalar dependencias**
 ```bash
-reflex run --env prod
+pip install -r requirements.txt
 ```
 
-### Docker (Opcional)
+### 3. **Configurar variables de entorno**
 ```bash
-# Construir imagen
-docker build -t pyenterprise-web .
+# Copiar el archivo de ejemplo
+cp .env.example .env
 
-# Ejecutar contenedor
-docker run -p 3000:3000 pyenterprise-web
+# Editar .env y agregar tus credenciales de Supabase
+SUPABASE_URL=https://tu-proyecto.supabase.co
+SUPABASE_KEY=tu-clave-publica
 ```
+
+### 4. **Ejecutar la aplicación**
+```bash
+reflex run
+```
+
+La aplicación estará disponible en: **http://localhost:3000**
+
+## 🔑 Credenciales de Prueba
+
+### Administrador
+```
+Email: admin@pylink.com
+Contraseña: admin123
+URL: http://localhost:3000/admin
+```
+
+### Empleados
+```
+Juan (Desarrollador):
+Email: juan@pylink.com
+Contraseña: emp123
+
+María (Diseñadora):
+Email: maria@pylink.com
+Contraseña: emp123
+```
+
+## 📚 Documentación
+
+- **[Documentación Completa](docs/DOCUMENTACION_COMPLETA.md)** - Guía completa del sistema
+- **[Guía Rápida](docs/GUIA_RAPIDA.md)** - Guía de uso rápida
+- **[Cambios Realizados](docs/CAMBIOS_REALIZADOS.md)** - Registro de cambios recientes
+- **[Estructura](docs/ESTRUCTURA.md)** - Estructura del proyecto
+- **[Getting Started](docs/GETTING_STARTED.md)** - Guía de inicio rápido
+
+## 🧪 Testing
+
+### Ejecutar todos los tests
+```bash
+# Test completo del backend
+python tests/test_backend_completo.py
+
+# Test de autenticación
+python tests/test_login.py
+
+# Test del sistema completo
+python tests/test_sistema_completo.py
+
+# Test de Supabase
+python tests/test_supabase.py
+```
+
+## 🛠️ Scripts Auxiliares
+
+### Agregar datos de prueba
+```bash
+python scripts/agregar_datos_prueba.py
+```
+
+### Asignar admin a un proyecto
+```bash
+python scripts/asignar_admin_proyecto.py
+```
+
+### Actualizar contraseñas
+```bash
+python scripts/fix_passwords.py
+```
+
+## 🎯 Características Principales
+
+### Panel de Administración
+- ✅ Gestión completa de proyectos
+- ✅ Gestión de empleados con estadísticas
+- ✅ Creación y asignación de tareas
+- ✅ Vista de jornadas laborales
+- ✅ Reportes y estadísticas en tiempo real
+
+### Dashboard de Empleados
+- ✅ Vista de proyectos asignados
+- ✅ Vista de tareas pendientes
+- ✅ Registro de jornadas laborales
+- ✅ Historial de horas trabajadas
+
+### Características Técnicas
+- ✅ Autenticación segura con bcrypt
+- ✅ Base de datos PostgreSQL en Supabase
+- ✅ Interfaz moderna con Reflex
+- ✅ Validación de formularios
+- ✅ Eliminación completa (hard delete)
+- ✅ Presupuestos en euros
+- ✅ Responsive design
+
+## 🏗️ Tecnologías Utilizadas
+
+- **Frontend:** Reflex (Python)
+- **Backend:** Python 3.11+
+- **Base de Datos:** Supabase (PostgreSQL)
+- **Autenticación:** bcrypt
+- **Estilos:** CSS personalizado + Reflex Components
+
+## 📝 Licencia
+
+[Especificar licencia aquí]
+
+## 👨‍💻 Autor
+
+[Tu nombre/organización]
+
+## 🤝 Contribuciones
+
+Las contribuciones son bienvenidas. Por favor, abre un issue o pull request.
 
 ## 📧 Contacto
 
-Para soporte técnico o consultas sobre el desarrollo:
-- **Email**: contacto@pyenterprise.com
-- **Teléfono**: +34 900 123 456
-- **Web**: [www.pyenterprise.com](https://www.pyenterprise.com)
-
-## 📄 Licencia
-
-Este proyecto está bajo la licencia especificada en el archivo `LICENSE`.
+[Tu información de contacto]
 
 ---
 
-**PyEnterprise** - Soluciones Empresariales con Python 🐍✨
+**🎉 ¡Sistema completamente funcional y listo para producción!**
+
+Desarrollado con ❤️ usando Python, Reflex y Supabase.

@@ -5,28 +5,7 @@ Solo login - Sin registro (las credenciales las asigna el admin)
 
 import reflex as rx
 from ..styles import *
-
-# Datos de empleados de prueba (en producción vendrían de base de datos)
-EMPLEADOS_DB = {
-    "juan@pylink.com": {
-        "password": "emp123",
-        "nombre": "Juan Pérez",
-        "rol": "Desarrollador Frontend",
-        "id": "EMP001"
-    },
-    "maria@pylink.com": {
-        "password": "emp123",
-        "nombre": "María García",
-        "rol": "Diseñadora UX/UI",
-        "id": "EMP002"
-    },
-    "admin@pylink.com": {
-        "password": "admin123",
-        "nombre": "Administrador",
-        "rol": "Administrador del Sistema",
-        "id": "ADMIN001"
-    }
-}
+from ..database import login_empleado
 
 
 class EmployeeAuthState(rx.State):
@@ -60,36 +39,38 @@ class EmployeeAuthState(rx.State):
         self.show_error = False
     
     def login(self):
-        """Procesar login de empleado."""
+        """Procesar login de empleado usando Supabase."""
         # Validar que los campos no estén vacíos
         if not self.email or not self.password:
             self.error_message = "Por favor, ingresa email y contraseña"
             self.show_error = True
             return
         
-        # Verificar credenciales
-        if self.email in EMPLEADOS_DB:
-            empleado = EMPLEADOS_DB[self.email]
-            if empleado["password"] == self.password:
-                # Login exitoso
-                self.is_authenticated = True
-                self.employee_name = empleado["nombre"]
-                self.employee_role = empleado["rol"]
-                self.employee_id = empleado["id"]
-                self.is_admin = (self.email == "admin@pylink.com")
-                
-                # Limpiar campos
-                self.password = ""
-                self.error_message = ""
-                self.show_error = False
-                
-                # Redirigir al dashboard
-                return rx.redirect("/empleados/dashboard")
+        # Intentar autenticar con Supabase
+        empleado = login_empleado(self.email, self.password)
+        
+        if empleado:
+            # Login exitoso
+            self.is_authenticated = True
+            self.employee_name = f"{empleado['nombre']} {empleado.get('apellidos', '')}"
+            self.employee_role = empleado['rol']
+            self.employee_id = empleado['id']
+            self.is_admin = (empleado['rol'] == 'admin')
+            
+            # Limpiar campos
+            self.password = ""
+            self.error_message = ""
+            self.show_error = False
+            
+            # Redirigir según el rol
+            if empleado['rol'] == 'admin':
+                print(f"✅ Admin detectado: {empleado['nombre']}, redirigiendo a /admin")
+                return rx.redirect("/admin")
             else:
-                self.error_message = "Contraseña incorrecta"
-                self.show_error = True
+                print(f"✅ Empleado detectado: {empleado['nombre']}, redirigiendo a /empleados/dashboard")
+                return rx.redirect("/empleados/dashboard")
         else:
-            self.error_message = "Email no registrado. Contacta al administrador."
+            self.error_message = "Email o contraseña incorrectos"
             self.show_error = True
     
     def logout(self):
