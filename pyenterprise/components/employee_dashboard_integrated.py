@@ -10,7 +10,8 @@ from ..database import (
     obtener_tareas_empleado,
     registrar_jornada,
     obtener_jornadas_empleado,
-    calcular_horas_totales_empleado
+    calcular_horas_totales_empleado,
+    actualizar_estado_tarea
 )
 from .employee_auth import EmployeeAuthState
 
@@ -102,14 +103,12 @@ class EmployeeDashboardState(rx.State):
     def start_work_session(self, proyecto_id: str = ""):
         """Iniciar sesión de trabajo."""
         if not self.is_working:
-            # Si hay proyectos, usar el primero; si no hay proyectos, no permitir iniciar
+            # Si hay proyectos, usar el primero; si no, permitir jornada sin proyecto
+            proyecto_para_usar = None
             if proyecto_id:
                 proyecto_para_usar = proyecto_id
             elif len(self.proyectos) > 0:
                 proyecto_para_usar = self.proyectos[0]["id"]
-            else:
-                print("❌ No hay proyectos asignados. No se puede iniciar jornada.")
-                return
             
             self.current_session = {
                 "proyecto_id": proyecto_para_usar,
@@ -117,7 +116,10 @@ class EmployeeDashboardState(rx.State):
                 "description": ""
             }
             self.is_working = True
-            print(f"✅ Jornada iniciada en proyecto: {proyecto_para_usar}")
+            if proyecto_para_usar:
+                print(f"✅ Jornada iniciada en proyecto: {proyecto_para_usar}")
+            else:
+                print("✅ Jornada iniciada (sin proyecto asignado)")
 
     async def end_work_session(self):
         """Finalizar sesión de trabajo."""
@@ -128,13 +130,13 @@ class EmployeeDashboardState(rx.State):
 
             # Usar el empleado_id ya cargado en el estado
             empleado_id = self.empleado_id
-            proyecto_id = self.current_session.get("proyecto_id")
+            proyecto_id = self.current_session.get("proyecto_id")  # Puede ser None
 
-            # Validar que tengamos un proyecto válido
-            if empleado_id and proyecto_id:
+            # Validar que tengamos empleado_id (proyecto_id es opcional)
+            if empleado_id:
                 jornada_data = registrar_jornada(
                     empleado_id=empleado_id,
-                    proyecto_id=proyecto_id,
+                    proyecto_id=proyecto_id,  # Puede ser None ahora
                     fecha=end_time.strftime('%Y-%m-%d'),
                     hora_inicio=start_time.strftime('%Y-%m-%dT%H:%M:%S'),
                     hora_fin=end_time.strftime('%Y-%m-%dT%H:%M:%S'),
@@ -149,7 +151,7 @@ class EmployeeDashboardState(rx.State):
                 else:
                     print("❌ Error al registrar jornada")
             else:
-                print(f"❌ No se puede registrar jornada: empleado_id={empleado_id}, proyecto_id={proyecto_id}")
+                print(f"❌ No se puede registrar jornada: empleado_id no válido")
 
             # Limpiar sesión
             self.is_working = False
@@ -159,6 +161,26 @@ class EmployeeDashboardState(rx.State):
     def set_work_description(self, description: str):
         """Actualizar descripción de la sesión de trabajo."""
         self.work_description = description
+    
+    async def marcar_tarea_completada(self, tarea_id: str):
+        """Marcar una tarea como completada."""
+        resultado = actualizar_estado_tarea(tarea_id, "completada")
+        if resultado:
+            print(f"✅ Tarea {tarea_id} marcada como completada")
+            # Recargar tareas
+            await self.cargar_datos_desde_auth()
+        else:
+            print(f"❌ Error al marcar tarea como completada")
+    
+    async def cambiar_estado_tarea(self, tarea_id: str, nuevo_estado: str):
+        """Cambiar estado de una tarea."""
+        resultado = actualizar_estado_tarea(tarea_id, nuevo_estado)
+        if resultado:
+            print(f"✅ Tarea {tarea_id} cambiada a '{nuevo_estado}'")
+            # Recargar tareas
+            await self.cargar_datos_desde_auth()
+        else:
+            print(f"❌ Error al cambiar estado de tarea")
 
 
 def time_control_card() -> rx.Component:
@@ -184,7 +206,7 @@ def time_control_card() -> rx.Component:
                 ~EmployeeDashboardState.is_working,
                 rx.button(
                     "🟢 Iniciar Jornada",
-                    on_click=lambda: EmployeeDashboardState.start_work_session("default"),
+                    on_click=lambda: EmployeeDashboardState.start_work_session(""),
                     background=COLORS["success"],
                     color="white",
                     width="100%",
@@ -281,27 +303,131 @@ def tasks_card() -> rx.Component:
                         EmployeeDashboardState.tareas,
                         lambda t: rx.box(
                             rx.vstack(
-                                rx.text(t["titulo"], font_weight="600", font_size="1rem"),
+                                # Fila 1: Título con check
                                 rx.hstack(
-                                    rx.text(f"Estado: {t['estado']}", 
-                                           font_size="0.85rem"),
-                                    rx.text(f"Prioridad: {t['prioridad']}", 
-                                           font_size="0.85rem", color=COLORS["warning"]),
-                                    spacing="3",
+                                    rx.cond(
+                                        t["estado"] == "completada",
+                                        rx.icon("circle-check", size=20, color="#22c55e"),
+                                        rx.icon("circle", size=20, color="#94a3b8")
+                                    ),
+                                    rx.text(
+                                        t["titulo"], 
+                                        font_weight="700", 
+                                        font_size="1.05rem",
+                                        color=COLORS["text"],
+                                        text_decoration=rx.cond(t["estado"] == "completada", "line-through", "none"),
+                                    ),
+                                    spacing="2",
+                                    align="center",
+                                    width="100%",
                                 ),
-                                rx.text(f"Vence: {t['fecha_vencimiento']}", 
-                                       font_size="0.8rem", color=COLORS["text_light"]),
-                                spacing="1",
+                                
+                                # Fila 2: Prioridad y Estado
+                                rx.hstack(
+                                    # Prioridad
+                                    rx.cond(
+                                        t['prioridad'] == "alta",
+                                        rx.badge("⚡ Alta", color_scheme="red", variant="soft", font_size="0.8rem"),
+                                        rx.cond(
+                                            t['prioridad'] == "media",
+                                            rx.badge("⚡ Media", color_scheme="orange", variant="soft", font_size="0.8rem"),
+                                            rx.badge("⚡ Baja", color_scheme="gray", variant="soft", font_size="0.8rem")
+                                        )
+                                    ),
+                                    # Estado
+                                    rx.cond(
+                                        t["estado"] == "completada",
+                                        rx.badge("✓ Completada", color_scheme="green", variant="soft", font_size="0.8rem"),
+                                        rx.cond(
+                                            t["estado"] == "en_progreso",
+                                            rx.badge("⏳ En Progreso", color_scheme="orange", variant="soft", font_size="0.8rem"),
+                                            rx.badge("○ Pendiente", color_scheme="blue", variant="soft", font_size="0.8rem")
+                                        )
+                                    ),
+                                    spacing="2",
+                                    width="100%",
+                                ),
+                                
+                                # Fila 3: Fecha
+                                rx.text(
+                                    f"📅 Vence: {t['fecha_vencimiento']}", 
+                                    font_size="0.9rem", 
+                                    color="#64748b",
+                                    font_weight="500"
+                                ),
+                                
+                                # Fila 4: Botones de acción
+                                rx.cond(
+                                    t["estado"] == "completada",
+                                    # Si está completada: solo botón Reabrir
+                                    rx.button(
+                                        "↶ Reabrir Tarea",
+                                        on_click=lambda: EmployeeDashboardState.cambiar_estado_tarea(t["id"], "pendiente"),
+                                        color_scheme="blue",
+                                        variant="outline",
+                                        size="2",
+                                        width="100%"
+                                    ),
+                                    # Si NO está completada: botones según estado
+                                    rx.cond(
+                                        t["estado"] == "pendiente",
+                                        # Pendiente: Iniciar + Completar
+                                        rx.hstack(
+                                            rx.button(
+                                                "▶ Iniciar",
+                                                on_click=lambda: EmployeeDashboardState.cambiar_estado_tarea(t["id"], "en_progreso"),
+                                                color_scheme="orange",
+                                                variant="outline",
+                                                size="2",
+                                                width="50%"
+                                            ),
+                                            rx.button(
+                                                "✓ Completar",
+                                                on_click=lambda: EmployeeDashboardState.marcar_tarea_completada(t["id"]),
+                                                color_scheme="green",
+                                                variant="solid",
+                                                size="2",
+                                                width="50%"
+                                            ),
+                                            spacing="2",
+                                            width="100%",
+                                        ),
+                                        # En progreso: solo Completar
+                                        rx.button(
+                                            "✓ Completar",
+                                            on_click=lambda: EmployeeDashboardState.marcar_tarea_completada(t["id"]),
+                                            color_scheme="green",
+                                            variant="solid",
+                                            size="2",
+                                            width="100%"
+                                        )
+                                    )
+                                ),
+                                
+                                spacing="3",
+                                align="start",
+                                width="100%",
                             ),
-                            padding="0.75rem",
-                            border="1px solid",
-                            border_color=COLORS["border"],
-                            border_radius="6px",
-                            margin_bottom="0.5rem",
+                            padding="1rem",
+                            border="2px solid",
+                            border_color=rx.cond(
+                                t["estado"] == "completada",
+                                "#22c55e",
+                                "#e2e8f0"
+                            ),
+                            border_radius="12px",
+                            margin_bottom="0.75rem",
+                            background=rx.cond(
+                                t["estado"] == "completada",
+                                "#f0fdf4",
+                                "white"
+                            ),
                             _hover={
-                                "border_color": COLORS["warning"],
-                                "background": COLORS["surface"]
-                            }
+                                "border_color": COLORS["primary"],
+                                "box_shadow": "0 4px 16px rgba(0,0,0,0.08)",
+                            },
+                            transition="all 0.2s ease",
+                            width="100%",
                         )
                     ),
                     spacing="2",
@@ -345,12 +471,7 @@ def employee_dashboard() -> rx.Component:
                         rx.text(EmployeeDashboardState.empleado_nombre, font_size="1.2rem"),
                         spacing="1",
                     ),
-                    rx.vstack(
-                        rx.text("🆔 ID:", font_weight="600"),
-                        rx.text(EmployeeDashboardState.empleado_id),
-                        spacing="1",
-                    ),
-                    justify="between",
+                    justify="start",
                     align="center",
                     width="100%",
                 ),

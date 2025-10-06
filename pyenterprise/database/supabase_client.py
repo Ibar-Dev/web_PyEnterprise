@@ -184,16 +184,17 @@ def crear_proyecto(nombre: str, descripcion: str, cliente: str,
 # FUNCIONES DE JORNADAS
 # ====================================================
 
-def registrar_jornada(empleado_id: str, proyecto_id: str, fecha: str,
+def registrar_jornada(empleado_id: str, proyecto_id: Optional[str], fecha: str,
                      hora_inicio: str, hora_fin: str, descripcion: str) -> Optional[Dict[str, Any]]:
-    """Registrar una jornada laboral."""
+    """Registrar una jornada laboral. proyecto_id puede ser None si no hay proyecto asignado."""
     try:
-        # Validar que empleado_id y proyecto_id sean UUIDs válidos
+        # Validar que empleado_id sea UUID válido
         if not empleado_id or empleado_id == "default" or len(empleado_id) < 30:
             print(f"❌ Error: empleado_id inválido: {empleado_id}")
             return None
         
-        if not proyecto_id or proyecto_id == "default" or len(proyecto_id) < 30:
+        # Validar proyecto_id solo si se proporciona (puede ser None)
+        if proyecto_id and (proyecto_id == "default" or len(proyecto_id) < 30):
             print(f"❌ Error: proyecto_id inválido: {proyecto_id}")
             return None
         
@@ -204,18 +205,23 @@ def registrar_jornada(empleado_id: str, proyecto_id: str, fecha: str,
         horas_trabajadas = (fin - inicio).total_seconds() / 3600
         
         client = get_supabase_client()
-        response = client.table('jornadas').insert({
+        jornada_data = {
             'empleado_id': empleado_id,
-            'proyecto_id': proyecto_id,
             'fecha': fecha,
             'hora_inicio': hora_inicio,
             'hora_fin': hora_fin,
             'horas_trabajadas': round(horas_trabajadas, 2),
             'descripcion': descripcion,
             'estado': 'completada'
-        }).execute()
+        }
         
-        print(f"✅ Jornada registrada: {horas_trabajadas:.2f} horas")
+        # Solo incluir proyecto_id si existe
+        if proyecto_id:
+            jornada_data['proyecto_id'] = proyecto_id
+        
+        response = client.table('jornadas').insert(jornada_data).execute()
+        
+        print(f"✅ Jornada registrada: {horas_trabajadas:.2f} horas{' (sin proyecto)' if not proyecto_id else ''}")
         return response.data[0] if response.data else None
     except Exception as e:
         print(f"Error en registrar_jornada: {e}")
