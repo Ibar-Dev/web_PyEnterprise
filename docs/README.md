@@ -1,157 +1,236 @@
-# PyEnterprise - Página Web Empresarial
+# 🚀 PyLink - Sistema de Gestión Empresarial
 
-Una página web moderna y profesional para PyEnterprise, desarrollada con **Reflex** (Python).
+Sistema completo de gestión de proyectos, tareas y empleados desarrollado con **Python, Reflex y Supabase**.
 
-## 🚀 Características
+---
 
-### Frontend
-- **Diseño Moderno**: Interfaz limpia y profesional
-- **Responsive**: Optimizada para todos los dispositivos
-- **Componentes Modulares**: Arquitectura escalable y mantenible
-- **SEO Optimizada**: Estructura pensada para motores de búsqueda
-- **Performance**: Carga rápida y experiencia fluida
+## 📋 Contenido
 
-### Backend
-- **Base de Datos**: SQLite/PostgreSQL con SQLAlchemy
-- **API REST**: Endpoints para gestión de contactos y contenido
-- **Panel Admin**: Dashboard para gestión de contactos y configuración
-- **Email**: Sistema de notificaciones automático
-- **Modelos**: Contact, Service, Project, BlogPost
+1. [¿Qué es PyLink?](#qué-es-pylink)
+2. [Instalación](#instalación)
+3. [Estructura del Proyecto](#estructura-del-proyecto)
+4. [Credenciales de Prueba](#credenciales-de-prueba)
+5. [Documentación](#documentación)
 
-## 📋 Secciones
+---
 
-- **Hero Section**: Presentación principal con CTAs
-- **Sobre Nosotros**: Información de la empresa, misión y visión
-- **Servicios**: Catálogo completo de servicios oferecidos
-- **Contacto**: Formulario funcional y información de contacto
-- **Footer**: Enlaces adicionales y redes sociales
+## 🎯 ¿Qué es PyLink?
 
-## 🛠️ Tecnologías
+**PyLink** es un sistema de gestión empresarial que permite:
 
-### Frontend
-- **Reflex**: Framework Python para aplicaciones web fullstack
-- **CSS3**: Estilos modernos y animaciones
-- **Font Awesome**: Iconografía profesional
-- **Google Fonts**: Tipografía Inter
+### Para Administradores:
+- ✅ Gestionar proyectos con presupuestos en €
+- ✅ Crear y asignar tareas a empleados
+- ✅ Ver estadísticas de horas trabajadas
+- ✅ Administrar empleados y sus roles
+- ✅ Generar reportes en tiempo real
 
-### Backend
-- **Python 3.8+**: Lenguaje de programación
-- **SQLAlchemy**: ORM para base de datos
-- **SQLite/PostgreSQL**: Base de datos
-- **SMTP**: Sistema de emails
-- **python-dotenv**: Gestión de variables de entorno
+### Para Empleados:
+- ✅ Ver proyectos asignados
+- ✅ Gestionar tareas pendientes
+- ✅ Registrar jornadas laborales
+- ✅ Ver historial de horas trabajadas
 
-## 📦 Instalación
+---
 
-1. **Clonar el repositorio**:
-   ```bash
-   git clone <repository-url>
-   cd web_PyEnterprise
-   ```
+## 🚀 Instalación
 
-2. **Crear entorno virtual**:
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # En Windows: venv\\Scripts\\activate
-   ```
+### **1. Clonar el repositorio**
+```bash
+git clone <url-del-repo>
+cd web_PyEnterprise
+```
 
-3. **Instalar dependencias**:
-   ```bash
-   pip install -r requirements.txt
-   ```
+### **2. Instalar dependencias**
+```bash
+pip install -r requirements.txt
+```
 
-4. **Inicializar Reflex**:
-   ```bash
-   reflex init
-   ```
+### **3. Configurar variables de entorno**
+```bash
+# Copiar el archivo de ejemplo
+cp .env.example .env
 
-5. **Ejecutar la aplicación**:
-   ```bash
-   reflex run
-   ```
+# Editar .env y agregar credenciales de Supabase
+SUPABASE_URL=https://tu-proyecto.supabase.co
+SUPABASE_KEY=tu-clave-publica
+```
 
-6. **Poblar con datos de muestra** (opcional):
-   ```bash
-   python seed_data.py
-   ```
+### **4. Ejecutar la aplicación**
+```bash
+reflex run
+```
 
-La aplicación estará disponible en:
-- **Frontend**: `http://localhost:3000`
-- **Admin Panel**: `http://localhost:3000/admin`
+La aplicación estará en: **http://localhost:3000**
+
+---
 
 ## 📁 Estructura del Proyecto
 
 ```
 web_PyEnterprise/
-├── pyenterprise/
-│   ├── __init__.py
-│   ├── pyenterprise.py          # Aplicación principal
-│   ├── styles.py               # Estilos globales
-│   └── components/             # Componentes modulares
-│       ├── __init__.py
-│       ├── navbar.py           # Navegación
-│       ├── hero.py             # Sección hero
-│       ├── about.py            # Sobre nosotros
-│       ├── services.py         # Servicios
-│       ├── contact.py          # Contacto
-│       └── footer.py           # Pie de página
-├── assets/                     # Recursos estáticos
-│   └── logo.png               # Logo de la empresa
-├── requirements.txt            # Dependencias
-├── rxconfig.py                # Configuración de Reflex
-└── README.md                  # Este archivo
+│
+├── pyenterprise/                  # 💻 Código principal de la aplicación
+│   │
+│   ├── database/                  # 🗄️ BACKEND - Acceso a base de datos
+│   │   ├── __init__.py            # Exports de funciones
+│   │   └── supabase_client.py     # ⭐ TODAS las funciones del backend
+│   │
+│   ├── components/                # 🎨 FRONTEND - Componentes de UI
+│   │   ├── admin_panel_profesional.py     # Panel de administración
+│   │   ├── employee_dashboard_integrated.py # Dashboard empleados
+│   │   ├── employee_auth.py       # Sistema de autenticación
+│   │   └── ...
+│   │
+│   ├── services/                  # 🔧 Lógica de negocio
+│   ├── models/                    # 📊 Modelos de datos
+│   ├── utils/                     # 🛠️ Utilidades
+│   ├── pyenterprise.py            # 🚀 App principal (routes)
+│   └── styles.py                  # 🎨 Estilos globales
+│
+├── docs/                          # 📄 Documentación
+│   ├── README.md                  # 👈 Este archivo
+│   ├── GUIA_USUARIO.md            # Guía de uso del sistema
+│   ├── GUIA_DESARROLLADOR.md      # Guía técnica para desarrolladores
+│   └── CHANGELOG.md               # Historial de cambios
+│
+├── tests/                         # 🧪 Tests del sistema
+│   ├── test_backend_completo.py
+│   ├── test_login.py
+│   └── ...
+│
+├── scripts/                       # 🛠️ Scripts auxiliares
+│   ├── agregar_datos_prueba.py    # Seed de datos de prueba
+│   ├── asignar_admin_proyecto.py
+│   └── ...
+│
+├── app.py                         # 🚀 Entry point de la aplicación
+├── requirements.txt               # 📦 Dependencias Python
+├── rxconfig.py                    # ⚙️ Configuración de Reflex
+└── README.md                      # 📘 README principal del proyecto
 ```
-
-## 🎨 Personalización
-
-### Colores y Estilos
-Los colores principales se definen en `pyenterprise/styles.py`:
-- Primario: `#2563eb` (Azul empresarial)
-- Secundario: `#1e40af` (Azul oscuro)
-- Accent: `#3b82f6` (Azul claro)
-
-### Contenido
-Cada componente es fácilmente personalizable:
-- **Hero**: Editar `components/hero.py` para cambiar el mensaje principal
-- **Servicios**: Modificar `components/services.py` para ajustar servicios oferecidos
-- **Contacto**: Personalizar `components/contact.py` con tu información
-
-### Logo y Assets
-- Reemplaza `assets/logo.png` con tu logo empresarial
-- Añade más imágenes en la carpeta `assets/`
-
-## 🚀 Despliegue
-
-### Desarrollo
-```bash
-reflex run --env dev
-```
-
-### Producción
-```bash
-reflex run --env prod
-```
-
-### Docker (Opcional)
-```bash
-# Construir imagen
-docker build -t pyenterprise-web .
-
-# Ejecutar contenedor
-docker run -p 3000:3000 pyenterprise-web
-```
-
-## 📧 Contacto
-
-Para soporte técnico o consultas sobre el desarrollo:
-- **Email**: contacto@pyenterprise.com
-- **Teléfono**: +34 900 123 456
-- **Web**: [www.pyenterprise.com](https://www.pyenterprise.com)
-
-## 📄 Licencia
-
-Este proyecto está bajo la licencia especificada en el archivo `LICENSE`.
 
 ---
 
-**PyEnterprise** - Soluciones Empresariales con Python 🐍✨
+## 📂 Backend - Estructura Detallada
+
+### **Archivo Principal: `pyenterprise/database/supabase_client.py`**
+
+Este archivo contiene **TODAS** las funciones del backend organizadas por categorías:
+
+```python
+# 🔐 AUTENTICACIÓN
+- login_empleado()          # Login con email/password
+- crear_empleado()          # Crear nuevo empleado
+
+# 📁 PROYECTOS
+- crear_proyecto()          # Crear proyecto con presupuesto en €
+- obtener_todos_proyectos() # Listar todos los proyectos
+- obtener_proyecto_por_id() # Obtener proyecto específico
+- actualizar_proyecto()     # Actualizar proyecto
+- eliminar_proyecto()       # Eliminar proyecto (hard delete)
+- asignar_empleado_proyecto() # Asignar empleado a proyecto
+
+# ✅ TAREAS
+- crear_tarea()             # Crear tarea con validación de fecha
+- obtener_todas_tareas()    # Listar todas las tareas
+- obtener_tareas_empleado() # Tareas de un empleado
+- actualizar_estado_tarea() # Cambiar estado de tarea
+- eliminar_tarea()          # Eliminar tarea (hard delete)
+
+# 👥 EMPLEADOS
+- obtener_todos_empleados() # Listar empleados
+- obtener_empleado_por_id() # Obtener empleado específico
+- eliminar_empleado()       # Eliminar empleado (hard delete)
+- obtener_empleados_con_estadisticas() # Empleados con horas mensuales
+
+# ⏰ JORNADAS LABORALES
+- registrar_jornada()       # Registrar jornada con validación UUID
+- obtener_jornadas_empleado() # Jornadas de un empleado
+- obtener_todas_jornadas()  # Todas las jornadas
+- calcular_horas_totales_empleado() # Total de horas trabajadas
+- calcular_horas_mensuales_empleado() # Horas del mes actual
+
+# 📊 ESTADÍSTICAS Y REPORTES
+- obtener_estadisticas_sistema() # Estadísticas generales
+- obtener_resumen_dashboard_admin() # Resumen para admin
+- obtener_estadisticas_proyecto() # Estadísticas por proyecto
+```
+
+**Características del Backend:**
+- ✅ Validación de fechas (formato AAAA-MM-DD)
+- ✅ Validación de UUIDs
+- ✅ Hard delete (eliminación completa)
+- ✅ Manejo de errores con mensajes descriptivos
+- ✅ Queries optimizadas con joins
+- ✅ Cálculos automáticos (horas, estadísticas)
+
+---
+
+## 🔑 Credenciales de Prueba
+
+### **Administrador**
+```
+URL: http://localhost:3000/empleados
+Email: admin@pylink.com
+Contraseña: admin123
+→ Redirige automáticamente a /admin
+```
+
+### **Empleados**
+```
+Juan (Desarrollador):
+- Email: juan@pylink.com
+- Contraseña: emp123
+
+María (Diseñadora):
+- Email: maria@pylink.com
+- Contraseña: emp123
+```
+
+---
+
+## 📚 Documentación
+
+- **[GUIA_USUARIO.md](GUIA_USUARIO.md)** - Cómo usar el sistema (admin y empleados)
+- **[GUIA_DESARROLLADOR.md](GUIA_DESARROLLADOR.md)** - Estructura técnica, backend, tests
+- **[CHANGELOG.md](CHANGELOG.md)** - Historial de cambios y mejoras
+
+---
+
+## 🛠️ Tecnologías Utilizadas
+
+- **Frontend:** Reflex (Python framework web)
+- **Backend:** Python 3.11+
+- **Base de Datos:** Supabase (PostgreSQL)
+- **Autenticación:** bcrypt
+- **Estilos:** CSS personalizado + Reflex Components
+
+---
+
+## 🚀 Comandos Rápidos
+
+```bash
+# Iniciar aplicación
+reflex run
+
+# Agregar datos de prueba
+python scripts/agregar_datos_prueba.py
+
+# Ejecutar tests
+python tests/test_backend_completo.py
+```
+
+---
+
+## 📧 Soporte
+
+Para más información consulta:
+- [Guía de Usuario](GUIA_USUARIO.md)
+- [Guía de Desarrollador](GUIA_DESARROLLADOR.md)
+
+---
+
+**🎉 Sistema completamente funcional y listo para usar!**
+
+Desarrollado con ❤️ usando Python, Reflex y Supabase.
