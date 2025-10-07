@@ -88,27 +88,126 @@ class EmployeeAuthState(rx.State):
 
 
 def employee_login_page() -> rx.Component:
-    """Página de login para empleados - versión minimalista."""
-    return rx.fragment(
-        rx.heading("PyLink - Login Empleados"),
-        rx.text("Correo Electrónico:"),
-        rx.input(
-            placeholder="tu.email@pylink.com",
-            value=EmployeeAuthState.email,
-            on_change=EmployeeAuthState.set_email,
+    """Página de login para empleados con diseño moderno."""
+    return rx.box(
+        rx.center(
+            rx.card(
+                rx.vstack(
+                    # Logo y título con efectos
+                    rx.hstack(
+                        rx.box(
+                            rx.image(
+                                src="/logopylink.png",
+                                alt="PyLink Logo",
+                                width="60px",
+                                height="60px",
+                            ),
+                            border_radius="50%",
+                            padding="6px",
+                            background="linear-gradient(135deg, rgba(94, 234, 212, 0.3), rgba(59, 130, 246, 0.3))",
+                            box_shadow="0 0 25px rgba(94, 234, 212, 0.6), 0 0 45px rgba(59, 130, 246, 0.4)",
+                            transition="all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
+                        ),
+                        rx.heading(
+                            "PyLink",
+                            size="8",
+                            color=COLORS["primary"],
+                            font_weight="800",
+                            background=f"linear-gradient(45deg, #5EEAD4, {COLORS['primary']}, #00d4ff)",
+                            background_clip="text",
+                            _webkit_background_clip="text",
+                            _webkit_text_fill_color="transparent",
+                        ),
+                        align="center",
+                        spacing="4",
+                        justify="center",
+                        margin_bottom="2rem",
+                    ),
+                    
+                    rx.heading(
+                        "Acceso Empleados",
+                        size="6",
+                        text_align="center",
+                        margin_bottom="2rem",
+                        color=COLORS["text"],
+                    ),
+                    
+                    # Formulario
+                    rx.vstack(
+                        rx.text("Correo Electrónico:", font_weight="600", color=COLORS["text"]),
+                        rx.input(
+                            placeholder="tu.email@pylink.com",
+                            value=EmployeeAuthState.email,
+                            on_change=EmployeeAuthState.set_email,
+                            width="100%",
+                            size="3",
+                            border_color=COLORS["primary"],
+                        ),
+                        rx.text("Contraseña:", font_weight="600", color=COLORS["text"], margin_top="1rem"),
+                        rx.input(
+                            placeholder="••••••••",
+                            type="password",
+                            value=EmployeeAuthState.password,
+                            on_change=EmployeeAuthState.set_password,
+                            width="100%",
+                            size="3",
+                            border_color=COLORS["primary"],
+                        ),
+                        rx.cond(
+                            EmployeeAuthState.show_error,
+                            rx.text(
+                                EmployeeAuthState.error_message, 
+                                color="red",
+                                font_weight="500",
+                                margin_top="0.5rem"
+                            ),
+                        ),
+                        rx.button(
+                            "Iniciar Sesión",
+                            on_click=EmployeeAuthState.login,
+                            width="100%",
+                            size="3",
+                            margin_top="1.5rem",
+                            background=f"linear-gradient(45deg, {COLORS['primary']}, #00d4ff)",
+                            color="white",
+                            font_weight="600",
+                            border_radius="12px",
+                            box_shadow="0 4px 15px rgba(59, 130, 246, 0.3)",
+                            _hover={
+                                "transform": "translateY(-2px)",
+                                "box_shadow": "0 6px 20px rgba(59, 130, 246, 0.5)",
+                            },
+                            transition="all 0.3s ease",
+                        ),
+                        width="100%",
+                        spacing="1",
+                    ),
+                    
+                    # Credenciales de prueba
+                    rx.divider(margin_top="2rem", margin_bottom="1rem"),
+                    rx.vstack(
+                        rx.text("Credenciales de Prueba:", font_weight="600", font_size="0.9rem", color=COLORS["text"]),
+                        rx.text("👤 Usuario: juan@pylink.com / emp123", font_size="0.85rem", color=COLORS["text_light"]),
+                        rx.text("👑 Admin: admin@pylink.com / admin123", font_size="0.85rem", color=COLORS["text_light"]),
+                        spacing="1",
+                        align_items="center",
+                    ),
+                    
+                    spacing="4",
+                    align_items="stretch",
+                    width="100%",
+                ),
+                padding="3rem",
+                width="450px",
+                box_shadow="0 10px 40px rgba(0, 0, 0, 0.1)",
+            ),
+            min_height="100vh",
+            padding="2rem",
+            background=f"""
+                linear-gradient(135deg, {COLORS['background']} 0%, {COLORS['surface']} 100%),
+                radial-gradient(circle at 20% 80%, rgba(94, 234, 212, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(59, 130, 246, 0.15) 0%, transparent 50%)
+            """,
         ),
-        rx.text("Contraseña:"),
-        rx.input(
-            placeholder="contraseña",
-            type="password",
-            value=EmployeeAuthState.password,
-            on_change=EmployeeAuthState.set_password,
-        ),
-        rx.text(EmployeeAuthState.error_message, color="red"),
-        rx.button(
-            "Iniciar Sesión",
-            on_click=EmployeeAuthState.login,
-        ),
-        rx.text("Usuarios: juan@pylink.com / emp123"),
-        rx.text("Admin: admin@pylink.com / admin123"),
+        width="100%",
     )

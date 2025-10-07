@@ -75,17 +75,28 @@ def login_form() -> rx.Component:
                 rx.vstack(
                     # Logo y título
                     rx.hstack(
-                        rx.image(
-                            src="/logo.png",
-                            alt="PyLink Logo",
-                            width="40px",
-                            height="40px",
+                        rx.box(
+                            rx.image(
+                                src="/logopylink.png",
+                                alt="PyLink Logo",
+                                width="50px",
+                                height="50px",
+                            ),
+                            border_radius="50%",
+                            padding="5px",
+                            background="linear-gradient(135deg, rgba(94, 234, 212, 0.25), rgba(59, 130, 246, 0.25))",
+                            box_shadow="0 0 20px rgba(94, 234, 212, 0.5), 0 0 35px rgba(59, 130, 246, 0.3)",
+                            transition="all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
                         ),
                         rx.heading(
                             "PyLink",
                             size="6",
                             color=COLORS["primary"],
                             font_weight="800",
+                            background=f"linear-gradient(45deg, #5EEAD4, {COLORS['primary']}, #00d4ff)",
+                            background_clip="text",
+                            _webkit_background_clip="text",
+                            _webkit_text_fill_color="transparent",
                         ),
                         align="center",
                         spacing="3",

@@ -28,20 +28,31 @@ def footer() -> rx.Component:
                 # Columna 1 - Información de la empresa
                 rx.vstack(
                     rx.hstack(
-                        rx.image(
-                            src="/logo.png",
-                            alt="PyEnterprise Logo",
-                            width="32px",
-                            height="32px",
+                        rx.box(
+                            rx.image(
+                                src="/logopylink.png",
+                                alt="PyLink Logo",
+                                width="40px",
+                                height="40px",
+                            ),
+                            border_radius="50%",
+                            padding="3px",
+                            background="linear-gradient(135deg, rgba(94, 234, 212, 0.2), rgba(59, 130, 246, 0.2))",
+                            box_shadow="0 0 15px rgba(94, 234, 212, 0.4), 0 0 30px rgba(59, 130, 246, 0.2)",
+                            transition="all 0.3s ease",
+                            _hover={
+                                "transform": "scale(1.15) rotate(-5deg)",
+                                "box_shadow": "0 0 25px rgba(94, 234, 212, 0.6), 0 0 50px rgba(59, 130, 246, 0.4)",
+                            },
                         ),
                         rx.heading(
-                            "PyEnterprise",
+                            "PyLink",
                             size="md",
                             color=COLORS["primary"],
                             font_weight="700",
                         ),
                         align_items="center",
-                        spacing="2",
+                        spacing="3",
                         margin_bottom="1rem",
                     ),
                     

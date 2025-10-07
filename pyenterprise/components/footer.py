@@ -13,20 +13,35 @@ def footer() -> rx.Component:
             rx.vstack(
                 # Logo y descripción
                 rx.hstack(
-                    rx.image(
-                        src="/logo.png",
-                        alt="PyLink Logo",
-                        width="32px",
-                        height="32px",
+                    rx.box(
+                        rx.image(
+                            src="/logopylink.png",
+                            alt="PyLink Logo",
+                            width="40px",
+                            height="40px",
+                        ),
+                        border_radius="50%",
+                        padding="3px",
+                        background="linear-gradient(135deg, rgba(94, 234, 212, 0.3), rgba(59, 130, 246, 0.3))",
+                        box_shadow="0 0 15px rgba(94, 234, 212, 0.5), 0 0 30px rgba(59, 130, 246, 0.3)",
+                        transition="all 0.3s ease",
+                        _hover={
+                            "transform": "scale(1.15) rotate(-5deg)",
+                            "box_shadow": "0 0 25px rgba(94, 234, 212, 0.7), 0 0 50px rgba(59, 130, 246, 0.5)",
+                        },
                     ),
                     rx.heading(
                         "PyLink",
                         size="5",
                         color="white",
                         font_weight="800",
+                        background="linear-gradient(45deg, #5EEAD4, #3B82F6, #00d4ff)",
+                        background_clip="text",
+                        _webkit_background_clip="text",
+                        _webkit_text_fill_color="transparent",
                     ),
                     align_items="center",
-                    spacing="2",
+                    spacing="3",
                     margin_bottom="1rem",
                 ),
                 rx.text(

@@ -13,25 +13,35 @@ def navbar() -> rx.Component:
             rx.hstack(
                 # Logo y nombre con efecto glow
                 rx.hstack(
-                    rx.image(
-                        src="/logo.png",
-                        alt="PyLink Logo",
-                        width="40px",
-                        height="40px",
-                        margin_right="0.5rem",
+                    rx.box(
+                        rx.image(
+                            src="/logopylink.png",
+                            alt="PyLink Logo",
+                            width="48px",
+                            height="48px",
+                        ),
+                        border_radius="50%",
+                        padding="4px",
+                        background="linear-gradient(135deg, rgba(94, 234, 212, 0.2), rgba(59, 130, 246, 0.2))",
+                        box_shadow="0 0 20px rgba(94, 234, 212, 0.4), 0 0 40px rgba(59, 130, 246, 0.2)",
+                        transition="all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
+                        _hover={
+                            "transform": "scale(1.1) rotate(5deg)",
+                            "box_shadow": "0 0 30px rgba(94, 234, 212, 0.6), 0 0 60px rgba(59, 130, 246, 0.4)",
+                        },
                     ),
                     rx.heading(
                         "PyLink",
                         size="6",
                         color=COLORS["primary"],
                         font_weight="800",
-                        background=f"linear-gradient(45deg, {COLORS['primary']}, #00d4ff)",
+                        background=f"linear-gradient(45deg, #5EEAD4, {COLORS['primary']}, #00d4ff)",
                         background_clip="text",
                         _webkit_background_clip="text",
                         _webkit_text_fill_color="transparent",
                     ),
                     align_items="center",
-                    spacing="2",
+                    spacing="3",
                 ),
                 
                 # Menú de navegación con botones 3D
