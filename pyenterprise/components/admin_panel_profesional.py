@@ -482,169 +482,354 @@ class AdminPanelState(rx.State):
 
 
 def admin_header() -> rx.Component:
-    """Header del panel de admin."""
-    return rx.hstack(
-        rx.heading("🔧 Panel de Administración", size="8", color=COLORS["primary"]),
-        rx.button(
-            "↻ Recargar",
-            on_click=AdminPanelState.cargar_todos_datos,
-            variant="outline",
-            color_scheme="blue",
+    """Header del panel de admin con logo."""
+    return rx.box(
+        rx.hstack(
+            # Logo y título
+            rx.hstack(
+                rx.box(
+                    rx.image(
+                        src="/logopylink.png",
+                        width="55px",
+                        height="55px",
+                    ),
+                    border_radius="50%",
+                    padding="5px",
+                    background="linear-gradient(135deg, rgba(94, 234, 212, 0.25), rgba(59, 130, 246, 0.25))",
+                    box_shadow="0 0 25px rgba(94, 234, 212, 0.6), 0 0 40px rgba(59, 130, 246, 0.4)",
+                    transition="all 0.4s ease",
+                    _hover={
+                        "transform": "rotate(360deg) scale(1.1)",
+                        "box_shadow": "0 0 35px rgba(94, 234, 212, 0.8), 0 0 60px rgba(59, 130, 246, 0.6)",
+                    },
+                ),
+                rx.vstack(
+                    rx.heading(
+                        "Panel de Administración",
+                        size="8",
+                        background="linear-gradient(45deg, #5EEAD4, #3B82F6, #00d4ff)",
+                        background_clip="text",
+                        _webkit_background_clip="text",
+                        _webkit_text_fill_color="transparent",
+                        font_weight="800",
+                    ),
+                    rx.text("PyLink Admin Dashboard", color="gray.500", font_size="0.9rem"),
+                    spacing="0",
+                    align_items="start",
+                ),
+                spacing="4",
+                align_items="center",
+            ),
+            # Botones de acción
+            rx.hstack(
+                rx.button(
+                    "↻ Recargar",
+                    on_click=AdminPanelState.cargar_todos_datos,
+                    variant="outline",
+                    color_scheme="cyan",
+                    size="3",
+                    box_shadow="0 4px 15px rgba(94, 234, 212, 0.2)",
+                    _hover={
+                        "box_shadow": "0 6px 20px rgba(94, 234, 212, 0.4)",
+                        "transform": "translateY(-2px)",
+                    },
+                    transition="all 0.3s ease",
+                ),
+                rx.button(
+                    "Cerrar Sesión",
+                    on_click=lambda: rx.redirect("/empleados"),
+                    variant="outline",
+                    color_scheme="red",
+                    size="3",
+                ),
+                spacing="3",
+            ),
+            justify="between",
+            align="center",
+            width="100%",
         ),
-        rx.button(
-            "Cerrar Sesión",
-            on_click=lambda: rx.redirect("/empleados"),
-            variant="outline",
-            color_scheme="red",
-        ),
-        justify="between",
-        align="center",
-        width="100%",
-        padding="2rem 0 1rem 0",
+        padding="2rem 2rem 1rem 2rem",
+        background="linear-gradient(135deg, rgba(94, 234, 212, 0.05), rgba(59, 130, 246, 0.05))",
+        border_bottom="2px solid rgba(94, 234, 212, 0.2)",
+        backdrop_filter="blur(10px)",
     )
 
 
 def tab_buttons() -> rx.Component:
-    """Botones de navegación entre tabs."""
+    """Botones de navegación modernos."""
     return rx.hstack(
         rx.button(
             "📊 Resumen",
             on_click=lambda: AdminPanelState.cambiar_tab("overview"),
             variant=rx.cond(AdminPanelState.active_tab == "overview", "solid", "outline"),
-            color_scheme="blue",
+            color_scheme="cyan",
+            size="3",
+            border_radius="12px",
+            box_shadow=rx.cond(
+                AdminPanelState.active_tab == "overview",
+                "0 4px 20px rgba(94, 234, 212, 0.4)",
+                "none"
+            ),
+            transition="all 0.3s ease",
         ),
         rx.button(
             "📁 Proyectos",
             on_click=lambda: AdminPanelState.cambiar_tab("proyectos"),
             variant=rx.cond(AdminPanelState.active_tab == "proyectos", "solid", "outline"),
-            color_scheme="blue",
+            color_scheme="cyan",
+            size="3",
+            border_radius="12px",
+            box_shadow=rx.cond(
+                AdminPanelState.active_tab == "proyectos",
+                "0 4px 20px rgba(94, 234, 212, 0.4)",
+                "none"
+            ),
+            transition="all 0.3s ease",
         ),
         rx.button(
             "👥 Empleados",
             on_click=lambda: AdminPanelState.cambiar_tab("empleados"),
             variant=rx.cond(AdminPanelState.active_tab == "empleados", "solid", "outline"),
-            color_scheme="blue",
+            color_scheme="cyan",
+            size="3",
+            border_radius="12px",
+            box_shadow=rx.cond(
+                AdminPanelState.active_tab == "empleados",
+                "0 4px 20px rgba(94, 234, 212, 0.4)",
+                "none"
+            ),
+            transition="all 0.3s ease",
         ),
         rx.button(
             "✅ Tareas",
             on_click=lambda: AdminPanelState.cambiar_tab("tareas"),
             variant=rx.cond(AdminPanelState.active_tab == "tareas", "solid", "outline"),
-            color_scheme="blue",
+            color_scheme="cyan",
+            size="3",
+            border_radius="12px",
+            box_shadow=rx.cond(
+                AdminPanelState.active_tab == "tareas",
+                "0 4px 20px rgba(94, 234, 212, 0.4)",
+                "none"
+            ),
+            transition="all 0.3s ease",
         ),
         rx.button(
             "⏰ Jornadas",
             on_click=lambda: AdminPanelState.cambiar_tab("jornadas"),
             variant=rx.cond(AdminPanelState.active_tab == "jornadas", "solid", "outline"),
-            color_scheme="blue",
+            color_scheme="cyan",
+            size="3",
+            border_radius="12px",
+            box_shadow=rx.cond(
+                AdminPanelState.active_tab == "jornadas",
+                "0 4px 20px rgba(94, 234, 212, 0.4)",
+                "none"
+            ),
+            transition="all 0.3s ease",
         ),
         spacing="3",
         width="100%",
         wrap="wrap",
+        padding="1rem 2rem",
     )
 
 
 def overview_tab() -> rx.Component:
-    """Tab de resumen general con estadísticas."""
+    """Tab de resumen - estilo Notion oscuro."""
     return rx.vstack(
-        rx.heading("Resumen del Sistema", size="6"),
-        rx.text(f"Mes actual: {AdminPanelState.resumen.get('mes_actual', '')}", 
-               font_weight="600", color=COLORS["text_light"]),
+        # Header Section - estilo Notion oscuro
+        rx.vstack(
+            rx.text(
+                "Dashboard", 
+                font_size="2.5rem", 
+                color="white",
+                font_weight="700",
+                letter_spacing="-0.02em",
+            ),
+            rx.text(
+                f"{AdminPanelState.resumen.get('mes_actual', 'October 2025')}", 
+                font_weight="400",
+                font_size="0.95rem",
+                color="rgba(255, 255, 255, 0.6)",
+            ),
+            spacing="1",
+            align_items="start",
+            margin_bottom="2.5rem",
+        ),
 
+        # Grid de estadísticas - estilo Notion oscuro
         rx.grid(
-            # Card: Total Proyectos
-            rx.card(
+            # Card: Total Proyectos  
+            rx.box(
                 rx.vstack(
-                    rx.text("📁 Proyectos Activos", font_weight="600", font_size="0.9rem"),
                     rx.text(
+                        "Proyectos Activos", 
+                        font_weight="500", 
+                        font_size="0.875rem",
+                        color="rgba(255, 255, 255, 0.6)",
+                    ),
+                    rx.heading(
                         AdminPanelState.resumen.get("total_proyectos", 0),
                         font_size="2.5rem",
-                        font_weight="bold",
-                        color=COLORS["primary"]
+                        color="white",
+                        font_weight="700",
+                        letter_spacing="-0.02em",
                     ),
                     spacing="2",
+                    align_items="start",
                 ),
-                size="3",
+                padding="1.5rem",
+                border_radius="12px",
+                background="rgba(255, 255, 255, 0.05)",
+                border="1px solid rgba(94, 234, 212, 0.2)",
+                backdrop_filter="blur(10px)",
+                transition="all 0.3s ease",
+                _hover={
+                    "border_color": "#5EEAD4",
+                    "box_shadow": "0 4px 20px rgba(94, 234, 212, 0.2)",
+                    "background": "rgba(255, 255, 255, 0.08)",
+                },
             ),
 
             # Card: Total Empleados
-            rx.card(
+            rx.box(
                 rx.vstack(
-                    rx.text("👥 Empleados Activos", font_weight="600", font_size="0.9rem"),
                     rx.text(
+                        "Empleados", 
+                        font_weight="500", 
+                        font_size="0.875rem",
+                        color="rgba(255, 255, 255, 0.6)",
+                    ),
+                    rx.heading(
                         AdminPanelState.resumen.get("total_empleados", 0),
                         font_size="2.5rem",
-                        font_weight="bold",
-                        color=COLORS["success"]
+                        color="white",
+                        font_weight="700",
+                        letter_spacing="-0.02em",
                     ),
                     spacing="2",
+                    align_items="start",
                 ),
-                size="3",
+                padding="1.5rem",
+                border_radius="12px",
+                background="rgba(255, 255, 255, 0.05)",
+                border="1px solid rgba(59, 130, 246, 0.2)",
+                backdrop_filter="blur(10px)",
+                transition="all 0.3s ease",
+                _hover={
+                    "border_color": "#3B82F6",
+                    "box_shadow": "0 4px 20px rgba(59, 130, 246, 0.2)",
+                    "background": "rgba(255, 255, 255, 0.08)",
+                },
             ),
 
             # Card: Total Tareas
-            rx.card(
+            rx.box(
                 rx.vstack(
-                    rx.text("✅ Total Tareas", font_weight="600", font_size="0.9rem"),
-                    rx.hstack(
-                        rx.text(
-                            AdminPanelState.resumen.get("total_tareas", 0),
-                            font_size="2.5rem",
-                            font_weight="bold",
-                            color=COLORS["warning"]
-                        ),
-                        rx.vstack(
-                            rx.text(f"Pendientes: {AdminPanelState.resumen.get('tareas_pendientes', 0)}", 
-                                   font_size="0.75rem"),
-                            rx.text(f"Completadas: {AdminPanelState.resumen.get('tareas_completadas', 0)}", 
-                                   font_size="0.75rem"),
-                            spacing="0",
-                        ),
-                        spacing="3",
+                    rx.text(
+                        "Tareas", 
+                        font_weight="500", 
+                        font_size="0.875rem",
+                        color="rgba(255, 255, 255, 0.6)",
+                    ),
+                    rx.heading(
+                        AdminPanelState.resumen.get("total_tareas", 0),
+                        font_size="2.5rem",
+                        color="white",
+                        font_weight="700",
+                        letter_spacing="-0.02em",
+                    ),
+                    rx.text(
+                        f"{AdminPanelState.resumen.get('tareas_pendientes', 0)} pendientes · {AdminPanelState.resumen.get('tareas_completadas', 0)} completadas", 
+                        font_size="0.8rem",
+                        color="rgba(255, 255, 255, 0.5)",
                     ),
                     spacing="2",
+                    align_items="start",
                 ),
-                size="3",
+                padding="1.5rem",
+                border_radius="12px",
+                background="rgba(255, 255, 255, 0.05)",
+                border="1px solid rgba(16, 185, 129, 0.2)",
+                backdrop_filter="blur(10px)",
+                transition="all 0.3s ease",
+                _hover={
+                    "border_color": "#10B981",
+                    "box_shadow": "0 4px 20px rgba(16, 185, 129, 0.2)",
+                    "background": "rgba(255, 255, 255, 0.08)",
+                },
             ),
 
             # Card: Horas Este Mes
-            rx.card(
+            rx.box(
                 rx.vstack(
-                    rx.text("⏰ Horas Este Mes", font_weight="600", font_size="0.9rem"),
                     rx.text(
+                        "Horas Este Mes", 
+                        font_weight="500", 
+                        font_size="0.875rem",
+                        color="rgba(255, 255, 255, 0.6)",
+                    ),
+                    rx.heading(
                         f"{AdminPanelState.resumen.get('horas_mes_actual', 0):.1f}h",
                         font_size="2.5rem",
-                        font_weight="bold",
-                        color=COLORS["info"]
+                        color="white",
+                        font_weight="700",
+                        letter_spacing="-0.02em",
                     ),
-                    rx.text(f"Total: {AdminPanelState.resumen.get('horas_totales', 0):.1f}h", 
-                           font_size="0.75rem", color=COLORS["text_light"]),
+                    rx.text(
+                        f"Total: {AdminPanelState.resumen.get('horas_totales', 0):.1f}h",
+                        font_size="0.8rem",
+                        color="rgba(255, 255, 255, 0.5)",
+                    ),
                     spacing="2",
+                    align_items="start",
                 ),
-                size="3",
+                padding="1.5rem",
+                border_radius="12px",
+                background="rgba(255, 255, 255, 0.05)",
+                border="1px solid rgba(245, 158, 11, 0.2)",
+                backdrop_filter="blur(10px)",
+                transition="all 0.3s ease",
+                _hover={
+                    "border_color": "#F59E0B",
+                    "box_shadow": "0 4px 20px rgba(245, 158, 11, 0.2)",
+                    "background": "rgba(255, 255, 255, 0.08)",
+                },
             ),
 
             columns="4",
-            spacing="4",
+            spacing="6",
             width="100%",
         ),
 
-        spacing="6",
+        spacing="0",
         width="100%",
     )
 
 
 def proyectos_tab() -> rx.Component:
-    """Tab de gestión de proyectos."""
+    """Tab de gestión de proyectos - estilo oscuro con layout 2 columnas."""
     return rx.vstack(
-        rx.heading("Gestión de Proyectos", size="6"),
+        # Header
+        rx.text(
+            "Proyectos", 
+            font_size="2.5rem", 
+            color="white",
+            font_weight="700",
+            letter_spacing="-0.02em",
+            margin_bottom="2.5rem",
+        ),
         
-        # Formulario: Nuevo/Editar Proyecto
-        rx.card(
+        # Layout de 2 columnas: Formulario izquierda, Lista derecha
+        rx.grid(
+            # COLUMNA IZQUIERDA: Formulario
+            rx.box(
             rx.vstack(
                 rx.cond(
                     AdminPanelState.modo_edicion_proyecto,
-                    rx.heading("✏️ Editar Proyecto", size="4"),
-                    rx.heading("➕ Crear Nuevo Proyecto", size="4")
+                    rx.text("Editar Proyecto", font_size="1.25rem", color="white", font_weight="600"),
+                    rx.text("Crear Nuevo Proyecto", font_size="1.25rem", color="white", font_weight="600")
                 ),
                 # Fila 1: Nombre y Cliente
                 rx.grid(
@@ -652,127 +837,201 @@ def proyectos_tab() -> rx.Component:
                         placeholder="Nombre del proyecto", 
                         value=AdminPanelState.proyecto_nombre, 
                         on_change=AdminPanelState.set_proyecto_nombre,
-                        width="100%"
+                        size="3",
+                        width="100%",
+                        background="rgba(255, 255, 255, 0.05)",
+                        border="1px solid rgba(94, 234, 212, 0.2)",
+                        color="white",
+                        _placeholder={"color": "rgba(255, 255, 255, 0.4)"},
+                        _focus={"border_color": "#5EEAD4", "box_shadow": "0 0 0 3px rgba(94, 234, 212, 0.1)", "background": "rgba(255, 255, 255, 0.08)"},
                     ),
                     rx.input(
                         placeholder="Cliente", 
                         value=AdminPanelState.proyecto_cliente, 
                         on_change=AdminPanelState.set_proyecto_cliente,
-                        width="100%"
+                        size="3",
+                        width="100%",
+                        background="rgba(255, 255, 255, 0.05)",
+                        border="1px solid rgba(94, 234, 212, 0.2)",
+                        color="white",
+                        _placeholder={"color": "rgba(255, 255, 255, 0.4)"},
+                        _focus={"border_color": "#5EEAD4", "box_shadow": "0 0 0 3px rgba(94, 234, 212, 0.1)", "background": "rgba(255, 255, 255, 0.08)"},
                     ),
                     columns="2",
-                    spacing="3",
+                    spacing="4",
                     width="100%",
                 ),
                 
                 # Fila 2: Fecha de inicio y Presupuesto
                 rx.grid(
                     rx.vstack(
-                        rx.text("📅 Fecha de inicio:", font_size="0.85rem", font_weight="600", color=COLORS["text"]),
+                        rx.text("Fecha de inicio", font_size="0.875rem", font_weight="500", color="rgba(255, 255, 255, 0.6)"),
                         rx.input(
                             type="date",
                             value=AdminPanelState.proyecto_fecha_inicio,
                             on_change=AdminPanelState.set_proyecto_fecha_inicio,
-                            width="100%"
+                            size="3",
+                            width="100%",
+                            background="rgba(255, 255, 255, 0.05)",
+                            border="1px solid rgba(94, 234, 212, 0.2)",
+                            color="white",
+                            _focus={"border_color": "#5EEAD4", "box_shadow": "0 0 0 3px rgba(94, 234, 212, 0.1)", "background": "rgba(255, 255, 255, 0.08)"},
                         ),
-                        spacing="1",
+                        spacing="2",
                         width="100%",
                         align="start",
                     ),
                     rx.vstack(
-                        rx.text("💰 Presupuesto (€):", font_size="0.85rem", font_weight="600", color=COLORS["text"]),
+                        rx.text("Presupuesto (€)", font_size="0.875rem", font_weight="500", color="rgba(255, 255, 255, 0.6)"),
                         rx.input(
                             placeholder="5000", 
                             type="number", 
                             value=AdminPanelState.proyecto_presupuesto, 
                             on_change=AdminPanelState.set_proyecto_presupuesto,
-                            width="100%"
+                            size="3",
+                            width="100%",
+                            background="rgba(255, 255, 255, 0.05)",
+                            border="1px solid rgba(94, 234, 212, 0.2)",
+                            color="white",
+                            _placeholder={"color": "rgba(255, 255, 255, 0.4)"},
+                            _focus={"border_color": "#5EEAD4", "box_shadow": "0 0 0 3px rgba(94, 234, 212, 0.1)", "background": "rgba(255, 255, 255, 0.08)"},
                         ),
-                        spacing="1",
+                        spacing="2",
                         width="100%",
                         align="start",
                     ),
                     columns="2",
-                    spacing="3",
+                    spacing="4",
                     width="100%",
                 ),
                 
                 # Fila 3: Descripción
-                rx.input(
-                    placeholder="Descripción del proyecto", 
-                    value=AdminPanelState.proyecto_descripcion, 
-                    on_change=AdminPanelState.set_proyecto_descripcion,
-                    width="100%"
+                rx.vstack(
+                    rx.text("Descripción", font_size="0.875rem", font_weight="500", color="rgba(255, 255, 255, 0.6)"),
+                    rx.text_area(
+                        placeholder="Descripción detallada del proyecto...", 
+                        value=AdminPanelState.proyecto_descripcion, 
+                        on_change=AdminPanelState.set_proyecto_descripcion,
+                        width="100%",
+                        min_height="100px",
+                        background="rgba(255, 255, 255, 0.05)",
+                        border="1px solid rgba(94, 234, 212, 0.2)",
+                        color="white",
+                        _placeholder={"color": "rgba(255, 255, 255, 0.4)"},
+                        _focus={"border_color": "#5EEAD4", "box_shadow": "0 0 0 3px rgba(94, 234, 212, 0.1)", "background": "rgba(255, 255, 255, 0.08)"},
+                    ),
+                    spacing="2",
+                    width="100%",
+                    align="start",
                 ),
                 rx.cond(
                     AdminPanelState.modo_edicion_proyecto,
                     # Botones para modo edición
                     rx.hstack(
                         rx.button(
-                            "✅ Actualizar Proyecto", 
+                            "Actualizar Proyecto", 
                             on_click=AdminPanelState.crear_nuevo_proyecto, 
-                            background=COLORS["success"], 
+                            size="3",
+                            background="linear-gradient(135deg, #10B981, #059669)",
                             color="white", 
+                            font_weight="600",
+                            border_radius="8px",
+                            box_shadow="0 4px 15px rgba(16, 185, 129, 0.3)",
+                            _hover={
+                                "transform": "translateY(-2px)",
+                                "box_shadow": "0 6px 20px rgba(16, 185, 129, 0.4)",
+                            },
+                            transition="all 0.3s ease",
                             width="70%"
                         ),
                         rx.button(
-                            "❌ Cancelar", 
+                            "Cancelar", 
                             on_click=AdminPanelState.cancelar_edicion_proyecto, 
-                            color_scheme="gray", 
+                            size="3",
+                            background="rgba(255, 255, 255, 0.05)",
+                            border="1px solid rgba(255, 255, 255, 0.2)",
+                            color="white",
                             variant="outline",
-                            width="30%"
+                            width="30%",
+                            border_radius="8px",
                         ),
                         width="100%",
-                        spacing="2",
+                        spacing="3",
                     ),
                     # Botón para modo creación
                     rx.button(
-                        "➕ Crear Proyecto", 
+                        "Crear Proyecto", 
                         on_click=AdminPanelState.crear_nuevo_proyecto, 
-                        background=COLORS["primary"], 
+                        size="3",
+                        background="linear-gradient(135deg, #5EEAD4, #3B82F6)",
                         color="white", 
+                        font_weight="600",
+                        border_radius="8px",
+                        box_shadow="0 4px 15px rgba(94, 234, 212, 0.3)",
+                        _hover={
+                            "transform": "translateY(-2px)",
+                            "box_shadow": "0 6px 20px rgba(94, 234, 212, 0.4)",
+                        },
+                        transition="all 0.3s ease",
                         width="100%"
                     )
                 ),
-                spacing="3",
+                spacing="4",
                 width="100%",
             ),
-            size="3",
-        ),
-        
-        # Lista de Proyectos
-        rx.card(
+            padding="2rem",
+            border_radius="12px",
+            background="rgba(255, 255, 255, 0.05)",
+            border="1px solid rgba(94, 234, 212, 0.2)",
+            backdrop_filter="blur(10px)",
+            ),
+            
+            # COLUMNA DERECHA: Lista de Proyectos
+            rx.box(
             rx.vstack(
-                rx.heading("Proyectos Existentes", size="4"),
-                rx.text(f"Total: {AdminPanelState.proyectos.length()} proyectos", font_weight="600"),
+                rx.text("Proyectos", font_size="1.25rem", color="white", font_weight="600", margin_bottom="0.5rem"),
+                rx.text(f"{AdminPanelState.proyectos.length()} proyectos", font_weight="400", color="rgba(255, 255, 255, 0.6)", font_size="0.875rem", margin_bottom="1.5rem"),
                 rx.foreach(
                     AdminPanelState.proyectos,
                     lambda p: rx.box(
                         rx.hstack(
                             rx.vstack(
-                                rx.text(p["nombre"], font_weight="600", font_size="1.1rem"),
-                                rx.text(f"Cliente: {p['cliente']}", font_size="0.9rem"),
+                                rx.text(p["nombre"], font_weight="600", font_size="1rem", color="white"),
+                                rx.text(p['cliente'], font_size="0.875rem", color="rgba(255, 255, 255, 0.6)"),
                                 rx.hstack(
-                                    rx.text(f"Estado: {p['estado']}", font_size="0.85rem"),
-                                    rx.text(f"Presupuesto: {p['presupuesto_horas']}€", font_size="0.85rem", color=COLORS["success"]),
-                                    spacing="4",
+                                    rx.cond(
+                                        p['estado'] == "activo",
+                                        rx.badge(p['estado'], color_scheme="green", size="1"),
+                                        rx.badge(p['estado'], color_scheme="gray", size="1"),
+                                    ),
+                                    rx.text(f"{p['presupuesto_horas']}€", font_size="0.875rem", color="#5EEAD4", font_weight="500"),
+                                    spacing="2",
                                 ),
                                 spacing="1",
+                                align_items="start",
                             ),
                             rx.hstack(
                                 rx.button(
-                                    "✏️", 
+                                    rx.icon(tag="pencil", size=16),
                                     on_click=lambda: AdminPanelState.iniciar_edicion_proyecto(p["id"]), 
-                                    color_scheme="blue", 
+                                    background="rgba(94, 234, 212, 0.1)",
+                                    border="1px solid rgba(94, 234, 212, 0.3)",
+                                    color="#5EEAD4",
                                     variant="outline", 
-                                    size="2"
+                                    size="2",
+                                    border_radius="6px",
+                                    _hover={"background": "rgba(94, 234, 212, 0.2)"},
                                 ),
                                 rx.button(
-                                    "🗑️", 
+                                    rx.icon(tag="trash_2", size=16),
                                     on_click=lambda: AdminPanelState.eliminar_proyecto_admin(p["id"]), 
-                                    color_scheme="red", 
+                                    background="rgba(239, 68, 68, 0.1)",
+                                    border="1px solid rgba(239, 68, 68, 0.3)",
+                                    color="#EF4444",
                                     variant="outline", 
-                                    size="2"
+                                    size="2",
+                                    border_radius="6px",
+                                    _hover={"background": "rgba(239, 68, 68, 0.2)"},
                                 ),
                                 spacing="2",
                             ),
@@ -780,55 +1039,156 @@ def proyectos_tab() -> rx.Component:
                             align="center",
                             width="100%",
                         ),
-                        padding="1rem",
-                        border="1px solid",
-                        border_color=COLORS["border"],
+                        padding="1.25rem",
+                        border="1px solid rgba(94, 234, 212, 0.2)",
                         border_radius="8px",
-                        margin_bottom="0.5rem",
+                        background="rgba(255, 255, 255, 0.03)",
+                        margin_bottom="0.75rem",
+                        transition="all 0.2s ease",
+                        _hover={
+                            "border_color": "#5EEAD4",
+                            "background": "rgba(255, 255, 255, 0.05)",
+                        },
                     )
                 ),
-                spacing="3",
+                spacing="2",
                 width="100%",
             ),
-            size="3",
+            padding="2rem",
+            border_radius="12px",
+            background="rgba(255, 255, 255, 0.05)",
+            border="1px solid rgba(94, 234, 212, 0.2)",
+            backdrop_filter="blur(10px)",
+            ),
+            
+            # Configuración del grid: 2 columnas
+            columns="2",
+            spacing="6",
+            width="100%",
         ),
         
-        spacing="6",
+        spacing="0",
         width="100%",
     )
 
 
 def empleados_tab() -> rx.Component:
-    """Tab de gestión de empleados con horas totales."""
+    """Tab de gestión de empleados - estilo oscuro con layout 2 columnas."""
     return rx.vstack(
-        rx.heading("Gestión de Empleados", size="6"),
-        
-        # Formulario: Nuevo Empleado
-        rx.card(
-            rx.vstack(
-                rx.heading("Crear Nuevo Empleado", size="4"),
-                rx.grid(
-                    rx.input(placeholder="Email", value=AdminPanelState.empleado_email, on_change=AdminPanelState.set_empleado_email),
-                    rx.input(placeholder="Contraseña", type="password", value=AdminPanelState.empleado_password, on_change=AdminPanelState.set_empleado_password),
-                    rx.input(placeholder="Nombre", value=AdminPanelState.empleado_nombre, on_change=AdminPanelState.set_empleado_nombre),
-                    rx.input(placeholder="Apellidos", value=AdminPanelState.empleado_apellidos, on_change=AdminPanelState.set_empleado_apellidos),
-                    columns="2",
-                    spacing="3",
-                    width="100%",
-                ),
-                rx.select(["desarrollador", "diseñador", "admin", "gerente", "qa"], value=AdminPanelState.empleado_rol, on_change=AdminPanelState.set_empleado_rol),
-                rx.button("Crear Empleado", on_click=AdminPanelState.crear_nuevo_empleado, background=COLORS["success"], color="white", width="100%"),
-                spacing="3",
-                width="100%",
-            ),
-            size="3",
+        # Header
+        rx.text(
+            "Empleados", 
+            font_size="2.5rem", 
+            color="white",
+            font_weight="700",
+            letter_spacing="-0.02em",
+            margin_bottom="2.5rem",
         ),
         
-        # Lista de Empleados con Estadísticas
-        rx.card(
+        # Layout de 2 columnas
+        rx.grid(
+            # COLUMNA IZQUIERDA: Formulario
+            rx.box(
             rx.vstack(
-                rx.heading("Empleados Registrados", size="4"),
-                rx.text(f"Total: {AdminPanelState.empleados.length()} empleados", font_weight="600"),
+                rx.text("Crear Nuevo Empleado", font_size="1.25rem", color="white", font_weight="600"),
+                rx.grid(
+                    rx.input(
+                        placeholder="Email corporativo", 
+                        value=AdminPanelState.empleado_email, 
+                        on_change=AdminPanelState.set_empleado_email,
+                        size="3",
+                        background="rgba(255, 255, 255, 0.05)",
+                        border="1px solid rgba(94, 234, 212, 0.2)",
+                        color="white",
+                        _placeholder={"color": "rgba(255, 255, 255, 0.4)"},
+                        _focus={"border_color": "#5EEAD4", "box_shadow": "0 0 0 3px rgba(94, 234, 212, 0.1)", "background": "rgba(255, 255, 255, 0.08)"},
+                    ),
+                    rx.input(
+                        placeholder="Contraseña", 
+                        type="password", 
+                        value=AdminPanelState.empleado_password, 
+                        on_change=AdminPanelState.set_empleado_password,
+                        size="3",
+                        background="rgba(255, 255, 255, 0.05)",
+                        border="1px solid rgba(94, 234, 212, 0.2)",
+                        color="white",
+                        _placeholder={"color": "rgba(255, 255, 255, 0.4)"},
+                        _focus={"border_color": "#5EEAD4", "box_shadow": "0 0 0 3px rgba(94, 234, 212, 0.1)", "background": "rgba(255, 255, 255, 0.08)"},
+                    ),
+                    columns="2",
+                    spacing="4",
+                    width="100%",
+                ),
+                rx.grid(
+                    rx.input(
+                        placeholder="Nombre", 
+                        value=AdminPanelState.empleado_nombre, 
+                        on_change=AdminPanelState.set_empleado_nombre,
+                        size="3",
+                        background="rgba(255, 255, 255, 0.05)",
+                        border="1px solid rgba(94, 234, 212, 0.2)",
+                        color="white",
+                        _placeholder={"color": "rgba(255, 255, 255, 0.4)"},
+                        _focus={"border_color": "#5EEAD4", "box_shadow": "0 0 0 3px rgba(94, 234, 212, 0.1)", "background": "rgba(255, 255, 255, 0.08)"},
+                    ),
+                    rx.input(
+                        placeholder="Apellidos", 
+                        value=AdminPanelState.empleado_apellidos, 
+                        on_change=AdminPanelState.set_empleado_apellidos,
+                        size="3",
+                        background="rgba(255, 255, 255, 0.05)",
+                        border="1px solid rgba(94, 234, 212, 0.2)",
+                        color="white",
+                        _placeholder={"color": "rgba(255, 255, 255, 0.4)"},
+                        _focus={"border_color": "#5EEAD4", "box_shadow": "0 0 0 3px rgba(94, 234, 212, 0.1)", "background": "rgba(255, 255, 255, 0.08)"},
+                    ),
+                    columns="2",
+                    spacing="4",
+                    width="100%",
+                ),
+                rx.vstack(
+                    rx.text("Rol", font_size="0.875rem", font_weight="500", color="rgba(255, 255, 255, 0.6)"),
+                    rx.select(
+                        ["desarrollador", "diseñador", "admin", "gerente", "qa"], 
+                        value=AdminPanelState.empleado_rol, 
+                        on_change=AdminPanelState.set_empleado_rol,
+                        size="3",
+                    ),
+                    spacing="2",
+                    width="100%",
+                    align="start",
+                ),
+                rx.button(
+                    "Crear Empleado", 
+                    on_click=AdminPanelState.crear_nuevo_empleado, 
+                    size="3",
+                    background="linear-gradient(135deg, #10B981, #059669)",
+                    color="white", 
+                    font_weight="600",
+                    border_radius="8px",
+                    box_shadow="0 4px 15px rgba(16, 185, 129, 0.3)",
+                    _hover={
+                        "transform": "translateY(-2px)",
+                        "box_shadow": "0 6px 20px rgba(16, 185, 129, 0.4)",
+                    },
+                    transition="all 0.3s ease",
+                    width="100%"
+                ),
+                spacing="4",
+                width="100%",
+            ),
+            padding="2rem",
+            border_radius="12px",
+            background="rgba(255, 255, 255, 0.05)",
+            border="1px solid rgba(94, 234, 212, 0.2)",
+            backdrop_filter="blur(10px)",
+            ),
+            
+            # COLUMNA DERECHA: Lista de Empleados
+            rx.box(
+            rx.vstack(
+                rx.text("Empleados", font_size="1.25rem", color="white", font_weight="600", margin_bottom="0.5rem"),
+                rx.text(f"{AdminPanelState.empleados.length()} empleados", font_weight="400", color="rgba(255, 255, 255, 0.6)", font_size="0.875rem", margin_bottom="1.5rem"),
                 
                 # Tabla de empleados
                 rx.foreach(
@@ -836,47 +1196,68 @@ def empleados_tab() -> rx.Component:
                     lambda e: rx.box(
                         rx.hstack(
                             rx.vstack(
-                                rx.heading(f"{e['nombre']} {e['apellidos']}", size="4", color=COLORS["text"]),
-                                rx.text(f"📧 {e['email']}", font_size="0.9rem", color=COLORS["text"]),
-                                rx.text(f"👔 Rol: {e['rol']}", font_size="0.85rem", color=COLORS["primary"], font_weight="600"),
+                                rx.text(f"{e['nombre']} {e['apellidos']}", font_weight="600", font_size="1rem", color="white"),
+                                rx.text(e['email'], font_size="0.875rem", color="rgba(255, 255, 255, 0.6)"),
+                                rx.badge(e['rol'], color_scheme="cyan", size="1"),
                                 spacing="1",
                                 align="start",
                             ),
                             rx.vstack(
-                                rx.text(f"⏰ Horas este mes: {e['horas_mes_actual']}h", 
-                                       font_weight="700", color=COLORS["info"], font_size="1.1rem"),
+                                rx.text(f"{e['horas_mes_actual']:.1f}h", 
+                                       font_weight="600", color="#F59E0B", font_size="1rem"),
                                 rx.hstack(
-                                    rx.text(f"📁 {e['total_proyectos']} proyectos", font_size="0.85rem", color=COLORS["text"]),
-                                    rx.text(f"✅ {e['total_tareas']} tareas", font_size="0.85rem", color=COLORS["text"]),
-                                    spacing="3",
+                                    rx.text(f"{e['total_proyectos']} proyectos", font_size="0.8rem", color="rgba(255, 255, 255, 0.5)"),
+                                    rx.text("·", color="rgba(255, 255, 255, 0.3)"),
+                                    rx.text(f"{e['total_tareas']} tareas", font_size="0.8rem", color="rgba(255, 255, 255, 0.5)"),
+                                    spacing="1",
                                 ),
-                                spacing="1",
+                                spacing="0",
                                 align="end",
                             ),
-                            rx.button("🗑️", on_click=lambda: AdminPanelState.eliminar_empleado_admin(e["id"]), color_scheme="red", variant="solid", size="2"),
+                            rx.button(
+                                rx.icon(tag="trash_2", size=16),
+                                on_click=lambda: AdminPanelState.eliminar_empleado_admin(e["id"]), 
+                                background="rgba(239, 68, 68, 0.1)",
+                                border="1px solid rgba(239, 68, 68, 0.3)",
+                                color="#EF4444",
+                                variant="outline", 
+                                size="2",
+                                border_radius="6px",
+                                _hover={"background": "rgba(239, 68, 68, 0.2)"},
+                            ),
                             justify="between",
                             align="center",
                             width="100%",
                         ),
-                        padding="1.2rem",
-                        border="2px solid",
-                        border_color=COLORS["border"],
-                        border_radius="10px",
+                        padding="1.25rem",
+                        border="1px solid rgba(59, 130, 246, 0.2)",
+                        border_radius="8px",
+                        background="rgba(255, 255, 255, 0.03)",
                         margin_bottom="0.75rem",
-                        background="white",
+                        transition="all 0.2s ease",
                         _hover={
-                            "border_color": COLORS["primary"],
-                            "box_shadow": "0 4px 6px rgba(0,0,0,0.1)"
+                            "border_color": "#3B82F6",
+                            "background": "rgba(255, 255, 255, 0.05)",
                         }
                     )
                 ),
-                spacing="3",
+                spacing="2",
                 width="100%",
             ),
-            size="3",
+            padding="2rem",
+            border_radius="12px",
+            background="rgba(255, 255, 255, 0.05)",
+            border="1px solid rgba(59, 130, 246, 0.2)",
+            backdrop_filter="blur(10px)",
+            ),
+            
+            # Configuración del grid: 2 columnas
+            columns="2",
+            spacing="6",
+            width="100%",
         ),
         
-        spacing="6",
+        spacing="0",
         width="100%",
     )
 
@@ -1092,184 +1473,158 @@ def render_tarea_card(tarea: dict) -> rx.Component:
 
 
 def tareas_tab() -> rx.Component:
-    """Tab de gestión de tareas."""
+    """Tab de gestión de tareas - estilo oscuro con layout 2 columnas."""
     return rx.vstack(
-        rx.heading("Gestión de Tareas", size="6"),
+        # Header
+        rx.text(
+            "Tareas", 
+            font_size="2.5rem", 
+            color="white",
+            font_weight="700",
+            letter_spacing="-0.02em",
+            margin_bottom="2.5rem",
+        ),
         
-        # Formulario: Nueva Tarea
-        rx.card(
+        # Layout de 2 columnas
+        rx.grid(
+            # COLUMNA IZQUIERDA: Formulario
+            rx.box(
             rx.vstack(
-                rx.heading("➕ Crear Nueva Tarea", size="4"),
+                rx.text("Crear Nueva Tarea", font_size="1.25rem", color="white", font_weight="600"),
                 
                 # Título de la tarea
                 rx.input(
                     placeholder="Nombre de la tarea",
                     value=AdminPanelState.tarea_titulo,
                     on_change=AdminPanelState.set_tarea_titulo,
+                    size="3",
+                    background="rgba(255, 255, 255, 0.05)",
+                    border="1px solid rgba(94, 234, 212, 0.2)",
+                    color="white",
+                    _placeholder={"color": "rgba(255, 255, 255, 0.4)"},
+                    _focus={"border_color": "#5EEAD4", "box_shadow": "0 0 0 3px rgba(94, 234, 212, 0.1)", "background": "rgba(255, 255, 255, 0.08)"},
                     width="100%"
                 ),
                 
                 # Fila: Proyecto y Empleado (dropdowns)
                 rx.grid(
                     rx.vstack(
-                        rx.text("📁 Asignar a Proyecto:", font_size="0.85rem", font_weight="600", color=COLORS["text"]),
+                        rx.text("Proyecto:", font_size="0.875rem", font_weight="500", color="rgba(255, 255, 255, 0.6)"),
                         rx.select(
                             AdminPanelState.proyectos_opciones,
-                            placeholder="Seleccione un proyecto",
+                            placeholder="Seleccione proyecto",
                             value=AdminPanelState.tarea_proyecto_seleccionado,
                             on_change=AdminPanelState.seleccionar_proyecto_tarea,
+                            size="3",
                             width="100%"
                         ),
-                        spacing="1",
+                        spacing="2",
                         width="100%",
                         align="start",
                     ),
                     rx.vstack(
-                        rx.text("👤 Asignar a Empleado:", font_size="0.85rem", font_weight="600", color=COLORS["text"]),
+                        rx.text("Empleado:", font_size="0.875rem", font_weight="500", color="rgba(255, 255, 255, 0.6)"),
                         rx.select(
                             AdminPanelState.empleados_opciones,
-                            placeholder="Seleccione un empleado",
+                            placeholder="Seleccione empleado",
                             value=AdminPanelState.tarea_empleado_seleccionado,
                             on_change=AdminPanelState.seleccionar_empleado_tarea,
+                            size="3",
                             width="100%"
                         ),
-                        spacing="1",
+                        spacing="2",
                         width="100%",
                         align="start",
                     ),
                     columns="2",
-                    spacing="3",
-                    width="100%",
-                ),
-                
-                # Sección: Empleados Adicionales
-                rx.box(
-                    rx.vstack(
-                        rx.text("👥 Agregar Empleados Adicionales (Opcional)", font_size="0.9rem", font_weight="600", color=COLORS["text"]),
-                        rx.text("Puedes asignar múltiples empleados a esta tarea", font_size="0.75rem", color=COLORS["text_light"]),
-                        
-                        # Agregar empleado adicional
-                        rx.hstack(
-                            rx.select(
-                                AdminPanelState.empleados_opciones,
-                                placeholder="Seleccione otro empleado",
-                                value=AdminPanelState.tarea_empleado_adicional_seleccionado,
-                                on_change=AdminPanelState.seleccionar_empleado_adicional,
-                                width="70%"
-                            ),
-                            rx.button(
-                                "➕ Agregar",
-                                on_click=AdminPanelState.agregar_empleado_adicional,
-                                color_scheme="blue",
-                                variant="solid",
-                                width="30%"
-                            ),
-                            width="100%",
-                            spacing="2",
-                        ),
-                        
-                        # Lista de empleados adicionales
-                        rx.cond(
-                            AdminPanelState.tarea_empleados_adicionales.length() > 0,
-                            rx.vstack(
-                                rx.text("Empleados asignados adicionales:", font_size="0.8rem", font_weight="600"),
-                                rx.foreach(
-                                    AdminPanelState.tarea_empleados_adicionales,
-                                    lambda emp: rx.hstack(
-                                        rx.text(f"👤 {emp}", font_size="0.85rem"),
-                                        rx.button(
-                                            "❌",
-                                            on_click=lambda: AdminPanelState.quitar_empleado_adicional(emp),
-                                            color_scheme="red",
-                                            variant="ghost",
-                                            size="1"
-                                        ),
-                                        justify="between",
-                                        align="center",
-                                        width="100%",
-                                        padding="0.5rem",
-                                        border="1px solid",
-                                        border_color=COLORS["border"],
-                                        border_radius="6px",
-                                        background="#f8f9fa",
-                                    )
-                                ),
-                                spacing="2",
-                                width="100%",
-                            ),
-                            rx.fragment()
-                        ),
-                        
-                        spacing="2",
-                        width="100%",
-                    ),
-                    padding="1rem",
-                    border="1px dashed",
-                    border_color=COLORS["border"],
-                    border_radius="8px",
-                    background="#fafbfc",
+                    spacing="4",
                     width="100%",
                 ),
                 
                 # Descripción
                 rx.input(
-                    placeholder="Descripción de la tarea",
+                    placeholder="Descripción",
                     value=AdminPanelState.tarea_descripcion,
                     on_change=AdminPanelState.set_tarea_descripcion,
+                    size="3",
+                    background="rgba(255, 255, 255, 0.05)",
+                    border="1px solid rgba(94, 234, 212, 0.2)",
+                    color="white",
+                    _placeholder={"color": "rgba(255, 255, 255, 0.4)"},
+                    _focus={"border_color": "#5EEAD4", "box_shadow": "0 0 0 3px rgba(94, 234, 212, 0.1)", "background": "rgba(255, 255, 255, 0.08)"},
                     width="100%"
                 ),
                 
                 # Fila: Prioridad y Fecha de vencimiento
                 rx.grid(
                     rx.vstack(
-                        rx.text("⚡ Prioridad:", font_size="0.85rem", font_weight="600", color=COLORS["text"]),
+                        rx.text("Prioridad:", font_size="0.875rem", font_weight="500", color="rgba(255, 255, 255, 0.6)"),
                         rx.select(
                             ["alta", "media", "baja"],
                             value=AdminPanelState.tarea_prioridad,
                             on_change=AdminPanelState.set_tarea_prioridad,
-                            placeholder="Seleccione prioridad",
+                            placeholder="Seleccione",
+                            size="3",
                             width="100%"
                         ),
-                        spacing="1",
+                        spacing="2",
                         width="100%",
                         align="start",
                     ),
                     rx.vstack(
-                        rx.text("📅 Fecha de vencimiento:", font_size="0.85rem", font_weight="600", color=COLORS["text"]),
+                        rx.text("Fecha vencimiento:", font_size="0.875rem", font_weight="500", color="rgba(255, 255, 255, 0.6)"),
                         rx.input(
                             type="date",
                             value=AdminPanelState.tarea_fecha_vencimiento,
                             on_change=AdminPanelState.set_tarea_fecha_vencimiento,
+                            size="3",
+                            background="rgba(255, 255, 255, 0.05)",
+                            border="1px solid rgba(94, 234, 212, 0.2)",
+                            color="white",
+                            _focus={"border_color": "#5EEAD4", "box_shadow": "0 0 0 3px rgba(94, 234, 212, 0.1)", "background": "rgba(255, 255, 255, 0.08)"},
                             width="100%"
                         ),
-                        spacing="1",
+                        spacing="2",
                         width="100%",
                         align="start",
                     ),
                     columns="2",
-                    spacing="3",
+                    spacing="4",
                     width="100%",
                 ),
                 
                 # Botón crear
                 rx.button(
-                    "✅ Crear Tarea",
+                    "Crear Tarea",
                     on_click=AdminPanelState.crear_nueva_tarea,
-                    background=COLORS["warning"],
+                    size="3",
+                    background="linear-gradient(135deg, #F59E0B, #D97706)",
                     color="white",
+                    font_weight="600",
+                    border_radius="8px",
+                    box_shadow="0 4px 15px rgba(245, 158, 11, 0.3)",
+                    _hover={
+                        "transform": "translateY(-2px)",
+                        "box_shadow": "0 6px 20px rgba(245, 158, 11, 0.4)",
+                    },
+                    transition="all 0.3s ease",
                     width="100%"
                 ),
-                spacing="3",
+                spacing="4",
                 width="100%",
             ),
-            size="3",
-        ),
-        
-        # Lista de Tareas
-        rx.card(
+            padding="2rem",
+            border_radius="12px",
+            background="rgba(255, 255, 255, 0.05)",
+            border="1px solid rgba(94, 234, 212, 0.2)",
+            backdrop_filter="blur(10px)",
+            ),
+            
+            # COLUMNA DERECHA: Lista de Tareas
+            rx.box(
             rx.vstack(
-                rx.heading("Todas las Tareas", size="4"),
-                rx.text(f"Total: {AdminPanelState.tareas.length()} tareas", font_weight="600"),
+                rx.text("Tareas", font_size="1.25rem", color="white", font_weight="600", margin_bottom="0.5rem"),
+                rx.text(f"{AdminPanelState.tareas.length()} tareas", font_weight="400", color="rgba(255, 255, 255, 0.6)", font_size="0.875rem", margin_bottom="1.5rem"),
                 rx.cond(
                     AdminPanelState.tareas.length() > 0,
                     rx.vstack(
@@ -1280,28 +1635,47 @@ def tareas_tab() -> rx.Component:
                         spacing="2",
                         width="100%",
                     ),
-                    rx.text("No hay tareas creadas aún", font_size="0.9rem", color=COLORS["text_light"], font_style="italic")
+                    rx.text("No hay tareas creadas", font_size="0.875rem", color="rgba(255, 255, 255, 0.5)", font_style="italic")
                 ),
-                spacing="3",
+                spacing="2",
                 width="100%",
             ),
-            size="3",
+            padding="2rem",
+            border_radius="12px",
+            background="rgba(255, 255, 255, 0.05)",
+            border="1px solid rgba(245, 158, 11, 0.2)",
+            backdrop_filter="blur(10px)",
+            ),
+            
+            # Configuración del grid: 2 columnas
+            columns="2",
+            spacing="6",
+            width="100%",
         ),
         
-        spacing="6",
+        spacing="0",
         width="100%",
     )
 
 
 def jornadas_tab() -> rx.Component:
-    """Tab de jornadas laborales."""
+    """Tab de jornadas laborales - estilo oscuro."""
     return rx.vstack(
-        rx.heading("Jornadas Laborales", size="6"),
+        # Header
+        rx.text(
+            "Jornadas Laborales", 
+            font_size="2.5rem", 
+            color="white",
+            font_weight="700",
+            letter_spacing="-0.02em",
+            margin_bottom="2.5rem",
+        ),
         
-        rx.card(
+        # Lista de Jornadas - centrada
+        rx.box(
             rx.vstack(
-                rx.heading("Historial de Jornadas", size="4"),
-                rx.text(f"Total: {AdminPanelState.jornadas_con_info.length()} jornadas registradas", font_weight="600"),
+                rx.text("Historial de Jornadas", font_size="1.5rem", color="white", font_weight="600", margin_bottom="0.5rem"),
+                rx.text(f"{AdminPanelState.jornadas_con_info.length()} jornadas registradas", font_weight="400", color="rgba(255, 255, 255, 0.6)", font_size="0.875rem", margin_bottom="1.5rem"),
                 
                 rx.foreach(
                     AdminPanelState.jornadas_con_info,
@@ -1309,130 +1683,320 @@ def jornadas_tab() -> rx.Component:
                         rx.vstack(
                             # Fila 1: Fecha y Horas
                             rx.hstack(
-                                rx.text(j["fecha"], font_weight="700", font_size="1rem"),
+                                rx.text(j["fecha"], font_weight="600", font_size="1rem", color="white"),
                                 rx.text(f"{j['horas_trabajadas']}h", 
-                                       font_weight="700", color=COLORS["success"], font_size="1.1rem"),
+                                       font_weight="700", color="#10B981", font_size="1.2rem"),
                                 justify="between",
                                 width="100%",
                             ),
                             # Fila 2: Empleado
                             rx.hstack(
-                                rx.text("👤 Empleado:", font_weight="600", font_size="0.85rem"),
-                                rx.text(j["empleado_nombre"], font_size="0.9rem", color=COLORS["primary"], font_weight="600"),
+                                rx.text("Empleado:", font_weight="500", font_size="0.875rem", color="rgba(255, 255, 255, 0.6)"),
+                                rx.text(j["empleado_nombre"], font_size="0.875rem", color="#5EEAD4", font_weight="600"),
                                 spacing="2",
                             ),
                             # Fila 3: Proyecto (si existe)
                             rx.cond(
                                 j["tiene_proyecto"],
                                 rx.hstack(
-                                    rx.text("📁 Proyecto:", font_weight="600", font_size="0.85rem"),
-                                    rx.text(j["proyecto_nombre"], font_size="0.9rem", color=COLORS["info"], font_weight="600"),
+                                    rx.text("Proyecto:", font_weight="500", font_size="0.875rem", color="rgba(255, 255, 255, 0.6)"),
+                                    rx.text(j["proyecto_nombre"], font_size="0.875rem", color="#3B82F6", font_weight="600"),
                                     spacing="2",
                                 ),
                                 rx.fragment()
                             ),
                             # Fila 4: Descripción
-                            rx.text(f"📝 {j['descripcion']}", font_size="0.85rem", color=COLORS["text_light"]),
-                            spacing="2",
+                            rx.text(j['descripcion'], font_size="0.85rem", color="rgba(255, 255, 255, 0.5)"),
+                            spacing="1",
                         ),
-                        padding="1rem",
-                        border="2px solid",
-                        border_color=COLORS["border"],
+                        padding="1.25rem",
+                        border="1px solid rgba(16, 185, 129, 0.2)",
                         border_radius="8px",
                         margin_bottom="0.75rem",
-                        background="white",
+                        background="rgba(255, 255, 255, 0.03)",
+                        transition="all 0.2s ease",
                         _hover={
-                            "border_color": COLORS["primary"],
-                            "box_shadow": "0 2px 8px rgba(0,0,0,0.08)"
+                            "border_color": "#10B981",
+                            "background": "rgba(255, 255, 255, 0.05)",
                         }
                     )
                 ),
-                spacing="3",
+                spacing="2",
                 width="100%",
             ),
-            size="3",
+            padding="2rem",
+            border_radius="12px",
+            background="rgba(255, 255, 255, 0.05)",
+            border="1px solid rgba(16, 185, 129, 0.2)",
+            backdrop_filter="blur(10px)",
+            max_width="1000px",
+            width="100%",
         ),
         
-        spacing="6",
+        spacing="0",
         width="100%",
+        align="center",
+    )
+
+
+def sidebar_notion() -> rx.Component:
+    """Sidebar estilo Notion/Slack con fondo oscuro."""
+    return rx.box(
+        rx.vstack(
+            # Logo y título
+            rx.vstack(
+                rx.hstack(
+                    rx.image(
+                        src="/logopylink.png",
+                        width="40px",
+                        height="40px",
+                        border_radius="8px",
+                        box_shadow="0 0 20px rgba(94, 234, 212, 0.3)",
+                    ),
+                    rx.vstack(
+                        rx.text("PyLink", font_weight="700", font_size="1.2rem", color="white"),
+                        rx.text("Admin Panel", font_size="0.75rem", color="rgba(255, 255, 255, 0.6)"),
+                        spacing="0",
+                        align="start",
+                    ),
+                    spacing="3",
+                    align="center",
+                ),
+                padding="1.5rem",
+                border_bottom="1px solid rgba(255, 255, 255, 0.1)",
+                width="100%",
+            ),
+            
+            # Navegación
+            rx.vstack(
+                # Overview
+                rx.box(
+                    rx.hstack(
+                        rx.icon(tag="layout_dashboard", size=20, color=rx.cond(AdminPanelState.active_tab == "overview", "#5EEAD4", "rgba(255, 255, 255, 0.6)")),
+                        rx.text("Dashboard", font_weight=rx.cond(AdminPanelState.active_tab == "overview", "600", "500"), color=rx.cond(AdminPanelState.active_tab == "overview", "white", "rgba(255, 255, 255, 0.6)")),
+                        spacing="3",
+                        align="center",
+                    ),
+                    padding="0.75rem 1rem",
+                    border_radius="8px",
+                    background=rx.cond(AdminPanelState.active_tab == "overview", "rgba(94, 234, 212, 0.15)", "transparent"),
+                    cursor="pointer",
+                    transition="all 0.2s ease",
+                    _hover={"background": rx.cond(AdminPanelState.active_tab == "overview", "rgba(94, 234, 212, 0.15)", "rgba(255, 255, 255, 0.05)")},
+                    on_click=lambda: AdminPanelState.set_active_tab("overview"),
+                ),
+                
+                # Proyectos
+                rx.box(
+                    rx.hstack(
+                        rx.icon(tag="folder", size=20, color=rx.cond(AdminPanelState.active_tab == "proyectos", "#5EEAD4", "rgba(255, 255, 255, 0.6)")),
+                        rx.text("Proyectos", font_weight=rx.cond(AdminPanelState.active_tab == "proyectos", "600", "500"), color=rx.cond(AdminPanelState.active_tab == "proyectos", "white", "rgba(255, 255, 255, 0.6)")),
+                        spacing="3",
+                        align="center",
+                    ),
+                    padding="0.75rem 1rem",
+                    border_radius="8px",
+                    background=rx.cond(AdminPanelState.active_tab == "proyectos", "rgba(94, 234, 212, 0.15)", "transparent"),
+                    cursor="pointer",
+                    transition="all 0.2s ease",
+                    _hover={"background": rx.cond(AdminPanelState.active_tab == "proyectos", "rgba(94, 234, 212, 0.15)", "rgba(255, 255, 255, 0.05)")},
+                    on_click=lambda: AdminPanelState.set_active_tab("proyectos"),
+                ),
+                
+                # Empleados
+                rx.box(
+                    rx.hstack(
+                        rx.icon(tag="users", size=20, color=rx.cond(AdminPanelState.active_tab == "empleados", "#5EEAD4", "rgba(255, 255, 255, 0.6)")),
+                        rx.text("Empleados", font_weight=rx.cond(AdminPanelState.active_tab == "empleados", "600", "500"), color=rx.cond(AdminPanelState.active_tab == "empleados", "white", "rgba(255, 255, 255, 0.6)")),
+                        spacing="3",
+                        align="center",
+                    ),
+                    padding="0.75rem 1rem",
+                    border_radius="8px",
+                    background=rx.cond(AdminPanelState.active_tab == "empleados", "rgba(94, 234, 212, 0.15)", "transparent"),
+                    cursor="pointer",
+                    transition="all 0.2s ease",
+                    _hover={"background": rx.cond(AdminPanelState.active_tab == "empleados", "rgba(94, 234, 212, 0.15)", "rgba(255, 255, 255, 0.05)")},
+                    on_click=lambda: AdminPanelState.set_active_tab("empleados"),
+                ),
+                
+                # Tareas
+                rx.box(
+                    rx.hstack(
+                        rx.icon(tag="check_square", size=20, color=rx.cond(AdminPanelState.active_tab == "tareas", "#5EEAD4", "rgba(255, 255, 255, 0.6)")),
+                        rx.text("Tareas", font_weight=rx.cond(AdminPanelState.active_tab == "tareas", "600", "500"), color=rx.cond(AdminPanelState.active_tab == "tareas", "white", "rgba(255, 255, 255, 0.6)")),
+                        spacing="3",
+                        align="center",
+                    ),
+                    padding="0.75rem 1rem",
+                    border_radius="8px",
+                    background=rx.cond(AdminPanelState.active_tab == "tareas", "rgba(94, 234, 212, 0.15)", "transparent"),
+                    cursor="pointer",
+                    transition="all 0.2s ease",
+                    _hover={"background": rx.cond(AdminPanelState.active_tab == "tareas", "rgba(94, 234, 212, 0.15)", "rgba(255, 255, 255, 0.05)")},
+                    on_click=lambda: AdminPanelState.set_active_tab("tareas"),
+                ),
+                
+                # Jornadas
+                rx.box(
+                    rx.hstack(
+                        rx.icon(tag="clock", size=20, color=rx.cond(AdminPanelState.active_tab == "jornadas", "#5EEAD4", "rgba(255, 255, 255, 0.6)")),
+                        rx.text("Jornadas", font_weight=rx.cond(AdminPanelState.active_tab == "jornadas", "600", "500"), color=rx.cond(AdminPanelState.active_tab == "jornadas", "white", "rgba(255, 255, 255, 0.6)")),
+                        spacing="3",
+                        align="center",
+                    ),
+                    padding="0.75rem 1rem",
+                    border_radius="8px",
+                    background=rx.cond(AdminPanelState.active_tab == "jornadas", "rgba(94, 234, 212, 0.15)", "transparent"),
+                    cursor="pointer",
+                    transition="all 0.2s ease",
+                    _hover={"background": rx.cond(AdminPanelState.active_tab == "jornadas", "rgba(94, 234, 212, 0.15)", "rgba(255, 255, 255, 0.05)")},
+                    on_click=lambda: AdminPanelState.set_active_tab("jornadas"),
+                ),
+                
+                spacing="1",
+                width="100%",
+                padding="1rem",
+            ),
+            
+            # Botón cerrar sesión al final
+            rx.link(
+                rx.box(
+                    rx.hstack(
+                        rx.icon(tag="log_out", size=18, color="#EF4444"),
+                        rx.text("Cerrar Sesión", font_weight="500", color="#EF4444"),
+                        spacing="2",
+                        align="center",
+                    ),
+                    padding="0.75rem 1rem",
+                    border_radius="8px",
+                    cursor="pointer",
+                    transition="all 0.2s ease",
+                    _hover={"background": "rgba(239, 68, 68, 0.1)"},
+                ),
+                href="/empleados",
+                margin_top="auto",
+                margin_bottom="1rem",
+                margin_x="1rem",
+            ),
+            
+            spacing="0",
+            height="100vh",
+            justify="start",
+        ),
+        width="260px",
+        background="rgba(26, 26, 46, 0.95)",
+        backdrop_filter="blur(20px)",
+        border_right="1px solid rgba(94, 234, 212, 0.1)",
+        position="fixed",
+        left="0",
+        top="0",
+        height="100vh",
+        overflow_y="auto",
     )
 
 
 def admin_panel() -> rx.Component:
-    """Panel de administración profesional completo."""
-    return rx.container(
-        rx.vstack(
-            admin_header(),
+    """Panel de administración estilo Notion/Slack profesional."""
+    return rx.box(
+        rx.hstack(
+            # Sidebar
+            sidebar_notion(),
             
-            # Mensaje de éxito/error
-            rx.cond(
-                AdminPanelState.show_message,
-                rx.cond(
-                    AdminPanelState.success_message != "",
-                    rx.card(
-                        rx.hstack(
-                            rx.text(AdminPanelState.success_message, color="white"),
-                            rx.button(
-                                "✕",
-                                on_click=AdminPanelState.cerrar_mensaje,
-                                variant="ghost",
-                                size="1",
-                                color="white",
-                            ),
-                            justify="between",
-                            width="100%",
-                        ),
-                        background=COLORS["success"],
-                        color="white",
-                    ),
-                    rx.card(
-                        rx.hstack(
-                            rx.text(AdminPanelState.error_message, color="white"),
-                            rx.button(
-                                "✕",
-                                on_click=AdminPanelState.cerrar_mensaje,
-                                variant="ghost",
-                                size="1",
-                                color="white",
-                            ),
-                            justify="between",
-                            width="100%",
-                        ),
-                        background=COLORS["error"],
-                        color="white",
-                    ),
-                ),
-            ),
-            
-            tab_buttons(),
-            
-            # Contenido según tab activa
-            rx.cond(
-                AdminPanelState.active_tab == "overview",
-                overview_tab(),
-                rx.cond(
-                    AdminPanelState.active_tab == "proyectos",
-                    proyectos_tab(),
+            # Contenido principal
+            rx.box(
+                rx.vstack(
+                    # Mensaje de éxito/error - estilo Notion
                     rx.cond(
-                        AdminPanelState.active_tab == "empleados",
-                        empleados_tab(),
+                        AdminPanelState.show_message,
                         rx.cond(
-                            AdminPanelState.active_tab == "tareas",
-                            tareas_tab(),
+                            AdminPanelState.success_message != "",
+                            rx.box(
+                                rx.hstack(
+                                    rx.icon(tag="check_circle", color="#10B981", size=20),
+                                    rx.text(AdminPanelState.success_message, color="#064E3B", font_weight="500"),
+                                    rx.button(
+                                        rx.icon(tag="x", size=16),
+                                        on_click=AdminPanelState.cerrar_mensaje,
+                                        variant="ghost",
+                                        size="1",
+                                        color_scheme="green",
+                                    ),
+                                    justify="between",
+                                    align="center",
+                                    width="100%",
+                                ),
+                                padding="1rem 1.5rem",
+                                background="rgba(16, 185, 129, 0.1)",
+                                border="1px solid rgba(16, 185, 129, 0.3)",
+                                border_radius="8px",
+                                margin_bottom="1rem",
+                            ),
+                            rx.box(
+                                rx.hstack(
+                                    rx.icon(tag="alert_circle", color="#EF4444", size=20),
+                                    rx.text(AdminPanelState.error_message, color="#7F1D1D", font_weight="500"),
+                                    rx.button(
+                                        rx.icon(tag="x", size=16),
+                                        on_click=AdminPanelState.cerrar_mensaje,
+                                        variant="ghost",
+                                        size="1",
+                                        color_scheme="red",
+                                    ),
+                                    justify="between",
+                                    align="center",
+                                    width="100%",
+                                ),
+                                padding="1rem 1.5rem",
+                                background="rgba(239, 68, 68, 0.1)",
+                                border="1px solid rgba(239, 68, 68, 0.3)",
+                                border_radius="8px",
+                                margin_bottom="1rem",
+                            ),
+                        ),
+                    ),
+                    
+                    # Contenido según tab activa
+                    rx.cond(
+                        AdminPanelState.active_tab == "overview",
+                        overview_tab(),
+                        rx.cond(
+                            AdminPanelState.active_tab == "proyectos",
+                            proyectos_tab(),
                             rx.cond(
-                                AdminPanelState.active_tab == "jornadas",
-                                jornadas_tab(),
-                                rx.text("Tab no encontrado")
+                                AdminPanelState.active_tab == "empleados",
+                                empleados_tab(),
+                                rx.cond(
+                                    AdminPanelState.active_tab == "tareas",
+                                    tareas_tab(),
+                                    rx.cond(
+                                        AdminPanelState.active_tab == "jornadas",
+                                        jornadas_tab(),
+                                        rx.text("Tab no encontrado")
+                                    )
+                                )
                             )
                         )
-                    )
-                )
+                    ),
+                    
+                    spacing="0",
+                    width="100%",
+                    padding="2rem 3rem",
+                ),
+                margin_left="260px",
+                width="calc(100% - 260px)",
+                min_height="100vh",
+                background="""radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.2) 0%, transparent 50%),
+                            radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.2) 0%, transparent 50%),
+                            radial-gradient(circle at 40% 80%, rgba(59, 130, 246, 0.2) 0%, transparent 50%),
+                            linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%)""",
+                on_mount=AdminPanelState.on_mount,
             ),
             
-            spacing="6",
+            spacing="0",
             width="100%",
         ),
-        max_width="1400px",
-        padding="2rem",
-        on_mount=AdminPanelState.on_mount,
+        width="100%",
+        min_height="100vh",
+        background="linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%)",
     )

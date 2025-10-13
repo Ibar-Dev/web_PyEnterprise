@@ -184,20 +184,20 @@ class EmployeeDashboardState(rx.State):
 
 
 def time_control_card() -> rx.Component:
-    """Tarjeta de control de tiempo."""
-    return rx.card(
+    """Tarjeta de control de tiempo - estilo oscuro."""
+    return rx.box(
         rx.vstack(
-            rx.heading("⏰ Control de Tiempo", size="5"),
-            rx.text("Gestión de jornadas laborales"),
+            rx.text("Control de Tiempo", font_size="1.25rem", color="white", font_weight="600"),
+            rx.text("Gestión de jornadas laborales", color="rgba(255, 255, 255, 0.6)", font_size="0.875rem"),
 
             rx.cond(
                 EmployeeDashboardState.is_loading,
                 rx.spinner(),
                 rx.vstack(
-                    rx.text(f"Horas trabajadas hoy: {EmployeeDashboardState.horas_hoy:.1f}h",
-                           font_weight="600", font_size="1.1rem"),
-                    rx.text(f"Horas esta semana: {EmployeeDashboardState.horas_semana:.1f}h",
-                           font_size="0.9rem", color=COLORS["text_light"]),
+                    rx.text(f"Horas hoy: {EmployeeDashboardState.horas_hoy:.1f}h",
+                           font_weight="700", font_size="1.5rem", color="#10B981"),
+                    rx.text(f"Horas semana: {EmployeeDashboardState.horas_semana:.1f}h",
+                           font_size="0.9rem", color="rgba(255, 255, 255, 0.7)"),
                     spacing="2",
                 )
             ),
@@ -205,24 +205,44 @@ def time_control_card() -> rx.Component:
             rx.cond(
                 ~EmployeeDashboardState.is_working,
                 rx.button(
-                    "🟢 Iniciar Jornada",
+                    "Iniciar Jornada",
                     on_click=lambda: EmployeeDashboardState.start_work_session(""),
-                    background=COLORS["success"],
+                    background="linear-gradient(135deg, #10B981, #059669)",
                     color="white",
+                    font_weight="600",
                     width="100%",
+                    size="3",
+                    border_radius="8px",
+                    box_shadow="0 4px 15px rgba(16, 185, 129, 0.3)",
+                    _hover={
+                        "transform": "translateY(-2px)",
+                        "box_shadow": "0 6px 20px rgba(16, 185, 129, 0.4)",
+                    },
+                    transition="all 0.3s ease",
                 ),
                 rx.vstack(
-                    rx.text("🟢 Sesión Activa", color="green", font_weight="600"),
+                    rx.text("🟢 Sesión Activa", color="#10B981", font_weight="600"),
                     rx.input(
                         placeholder="¿Qué estás haciendo?",
                         value=EmployeeDashboardState.work_description,
                         on_change=EmployeeDashboardState.set_work_description,
+                        size="3",
+                        background="rgba(255, 255, 255, 0.05)",
+                        border="1px solid rgba(16, 185, 129, 0.3)",
+                        color="white",
+                        _placeholder={"color": "rgba(255, 255, 255, 0.4)"},
+                        _focus={"border_color": "#10B981", "box_shadow": "0 0 0 3px rgba(16, 185, 129, 0.1)"},
                     ),
                     rx.button(
-                        "🔴 Finalizar Jornada",
+                        "Finalizar Jornada",
                         on_click=EmployeeDashboardState.end_work_session,
-                        color_scheme="red",
+                        background="rgba(239, 68, 68, 0.2)",
+                        border="1px solid rgba(239, 68, 68, 0.4)",
+                        color="#EF4444",
+                        font_weight="600",
                         width="100%",
+                        size="3",
+                        _hover={"background": "rgba(239, 68, 68, 0.3)"},
                     ),
                     spacing="3",
                 )
@@ -232,43 +252,46 @@ def time_control_card() -> rx.Component:
             align="stretch",
             width="100%",
         ),
-        size="3",
-        padding="1.5rem",
+        padding="2rem",
+        border_radius="12px",
+        background="rgba(255, 255, 255, 0.05)",
+        border="1px solid rgba(16, 185, 129, 0.2)",
+        backdrop_filter="blur(10px)",
     )
 
 
 def projects_card() -> rx.Component:
-    """Tarjeta de proyectos asignados."""
-    return rx.card(
+    """Tarjeta de proyectos asignados - estilo oscuro."""
+    return rx.box(
         rx.vstack(
-            rx.heading("📊 Mis Proyectos", size="5"),
-            rx.text("Proyectos donde colaboras"),
+            rx.text("Mis Proyectos", font_size="1.25rem", color="white", font_weight="600"),
+            rx.text("Proyectos donde colaboras", color="rgba(255, 255, 255, 0.6)", font_size="0.875rem"),
 
             rx.cond(
                 EmployeeDashboardState.is_loading,
                 rx.spinner(),
                 rx.vstack(
-                    rx.text(f"Total: {EmployeeDashboardState.proyectos.length()} proyectos", 
-                           font_weight="600", color=COLORS["primary"]),
+                    rx.text(f"{EmployeeDashboardState.proyectos.length()} proyectos", 
+                           font_weight="400", color="rgba(255, 255, 255, 0.6)", font_size="0.875rem"),
                     rx.foreach(
                         EmployeeDashboardState.proyectos,
                         lambda p: rx.box(
                             rx.vstack(
-                                rx.text(p["nombre"], font_weight="600", font_size="1rem"),
+                                rx.text(p["nombre"], font_weight="600", font_size="1rem", color="white"),
                                 rx.text(f"Cliente: {p['cliente']}", 
-                                       font_size="0.85rem", color=COLORS["text_light"]),
-                                rx.text(f"Estado: {p['estado']}", 
-                                       font_size="0.85rem", color=COLORS["success"]),
+                                       font_size="0.85rem", color="rgba(255, 255, 255, 0.6)"),
+                                rx.badge(p['estado'], color_scheme="green", size="1"),
                                 spacing="1",
                             ),
-                            padding="0.75rem",
-                            border="1px solid",
-                            border_color=COLORS["border"],
-                            border_radius="6px",
+                            padding="1rem",
+                            border="1px solid rgba(94, 234, 212, 0.2)",
+                            border_radius="8px",
                             margin_bottom="0.5rem",
+                            background="rgba(255, 255, 255, 0.03)",
+                            transition="all 0.2s ease",
                             _hover={
-                                "border_color": COLORS["primary"],
-                                "background": COLORS["surface"]
+                                "border_color": "#5EEAD4",
+                                "background": "rgba(255, 255, 255, 0.05)"
                             }
                         )
                     ),
@@ -281,24 +304,27 @@ def projects_card() -> rx.Component:
             align="stretch",
             width="100%",
         ),
-        size="3",
-        padding="1.5rem",
+        padding="2rem",
+        border_radius="12px",
+        background="rgba(255, 255, 255, 0.05)",
+        border="1px solid rgba(59, 130, 246, 0.2)",
+        backdrop_filter="blur(10px)",
     )
 
 
 def tasks_card() -> rx.Component:
-    """Tarjeta de tareas asignadas."""
-    return rx.card(
+    """Tarjeta de tareas asignadas - estilo oscuro."""
+    return rx.box(
         rx.vstack(
-            rx.heading("✅ Mis Tareas", size="5"),
-            rx.text("Tareas pendientes y en progreso"),
+            rx.text("Mis Tareas", font_size="1.25rem", color="white", font_weight="600"),
+            rx.text("Tareas pendientes y en progreso", color="rgba(255, 255, 255, 0.6)", font_size="0.875rem"),
 
             rx.cond(
                 EmployeeDashboardState.is_loading,
                 rx.spinner(),
                 rx.vstack(
-                    rx.text(f"Total: {EmployeeDashboardState.tareas.length()} tareas", 
-                           font_weight="600", color=COLORS["warning"]),
+                    rx.text(f"{EmployeeDashboardState.tareas.length()} tareas", 
+                           font_weight="400", color="rgba(255, 255, 255, 0.6)", font_size="0.875rem"),
                     rx.foreach(
                         EmployeeDashboardState.tareas,
                         lambda t: rx.box(
@@ -314,7 +340,7 @@ def tasks_card() -> rx.Component:
                                         t["titulo"], 
                                         font_weight="700", 
                                         font_size="1.05rem",
-                                        color=COLORS["text"],
+                                        color="white",
                                         text_decoration=rx.cond(t["estado"] == "completada", "line-through", "none"),
                                     ),
                                     spacing="2",
@@ -408,23 +434,23 @@ def tasks_card() -> rx.Component:
                                 align="start",
                                 width="100%",
                             ),
-                            padding="1rem",
-                            border="2px solid",
+                            padding="1.25rem",
+                            border="1px solid",
                             border_color=rx.cond(
                                 t["estado"] == "completada",
-                                "#22c55e",
-                                "#e2e8f0"
+                                "rgba(34, 197, 94, 0.3)",
+                                "rgba(245, 158, 11, 0.2)"
                             ),
-                            border_radius="12px",
+                            border_radius="8px",
                             margin_bottom="0.75rem",
                             background=rx.cond(
                                 t["estado"] == "completada",
-                                "#f0fdf4",
-                                "white"
+                                "rgba(34, 197, 94, 0.05)",
+                                "rgba(255, 255, 255, 0.03)"
                             ),
                             _hover={
-                                "border_color": COLORS["primary"],
-                                "box_shadow": "0 4px 16px rgba(0,0,0,0.08)",
+                                "border_color": "#F59E0B",
+                                "background": "rgba(255, 255, 255, 0.05)",
                             },
                             transition="all 0.2s ease",
                             width="100%",
@@ -439,43 +465,60 @@ def tasks_card() -> rx.Component:
             align="stretch",
             width="100%",
         ),
-        size="3",
-        padding="1.5rem",
+        padding="2rem",
+        border_radius="12px",
+        background="rgba(255, 255, 255, 0.05)",
+        border="1px solid rgba(245, 158, 11, 0.2)",
+        backdrop_filter="blur(10px)",
     )
 
 
 def employee_dashboard() -> rx.Component:
-    """Dashboard principal para empleados."""
-    return rx.container(
+    """Dashboard principal para empleados - estilo oscuro."""
+    return rx.box(
         rx.vstack(
             # Header
             rx.hstack(
-                rx.heading("Dashboard de Empleados", size="7"),
-                rx.button(
-                    "Cerrar Sesión",
-                    on_click=lambda: rx.redirect("/empleados"),
-                    variant="outline",
-                    color_scheme="red",
+                rx.text("Dashboard de Empleados", font_size="2.5rem", color="white", font_weight="700", letter_spacing="-0.02em"),
+                rx.link(
+                    rx.button(
+                        rx.hstack(
+                            rx.icon(tag="log_out", size=18),
+                            rx.text("Cerrar Sesión", font_weight="600"),
+                            spacing="2",
+                        ),
+                        background="rgba(239, 68, 68, 0.2)",
+                        border="1px solid rgba(239, 68, 68, 0.4)",
+                        color="#EF4444",
+                        size="3",
+                        _hover={"background": "rgba(239, 68, 68, 0.3)"},
+                    ),
+                    href="/empleados",
                 ),
                 justify="between",
                 align="center",
                 width="100%",
-                padding="2rem 0",
+                margin_bottom="2rem",
             ),
 
             # Información del empleado
-            rx.card(
+            rx.box(
                 rx.hstack(
                     rx.vstack(
-                        rx.text("👤 Empleado:", font_weight="600"),
-                        rx.text(EmployeeDashboardState.empleado_nombre, font_size="1.2rem"),
+                        rx.text("Empleado:", font_weight="500", color="rgba(255, 255, 255, 0.6)", font_size="0.875rem"),
+                        rx.text(EmployeeDashboardState.empleado_nombre, font_size="1.3rem", color="white", font_weight="600"),
                         spacing="1",
                     ),
                     justify="start",
                     align="center",
                     width="100%",
                 ),
-                size="3",
+                padding="1.5rem",
+                border_radius="12px",
+                background="rgba(255, 255, 255, 0.05)",
+                border="1px solid rgba(94, 234, 212, 0.2)",
+                backdrop_filter="blur(10px)",
+                margin_bottom="2rem",
             ),
 
             # Grid de tarjetas principales
@@ -489,37 +532,42 @@ def employee_dashboard() -> rx.Component:
             ),
 
             # Historial reciente de jornadas
-            rx.card(
+            rx.box(
                 rx.vstack(
-                    rx.heading("📈 Historial de Jornadas", size="5"),
-                    rx.text("Últimas jornadas registradas"),
+                    rx.text("Historial de Jornadas", font_size="1.5rem", color="white", font_weight="600"),
+                    rx.text("Últimas jornadas registradas", color="rgba(255, 255, 255, 0.6)", font_size="0.875rem"),
 
                     rx.cond(
                         EmployeeDashboardState.is_loading,
                         rx.spinner(),
                         rx.vstack(
-                            rx.text(f"Total: {EmployeeDashboardState.jornadas.length()} jornadas", 
-                                   font_weight="600", color=COLORS["info"]),
+                            rx.text(f"{EmployeeDashboardState.jornadas.length()} jornadas", 
+                                   font_weight="400", color="rgba(255, 255, 255, 0.6)", font_size="0.875rem"),
                             rx.foreach(
                                 EmployeeDashboardState.jornadas,
                                 lambda j: rx.box(
                                     rx.vstack(
                                         rx.hstack(
-                                            rx.text(j["fecha"], font_weight="600"),
+                                            rx.text(j["fecha"], font_weight="600", color="white"),
                                             rx.text(f"{j['horas_trabajadas']}h", 
-                                                   font_weight="600", color=COLORS["success"]),
+                                                   font_weight="700", color="#10B981", font_size="1.1rem"),
                                             justify="between",
                                             width="100%",
                                         ),
                                         rx.text(j['descripcion'], 
-                                               font_size="0.85rem", color=COLORS["text_light"]),
+                                               font_size="0.85rem", color="rgba(255, 255, 255, 0.6)"),
                                         spacing="1",
                                     ),
-                                    padding="0.75rem",
-                                    border="1px solid",
-                                    border_color=COLORS["border"],
-                                    border_radius="6px",
+                                    padding="1rem",
+                                    border="1px solid rgba(16, 185, 129, 0.2)",
+                                    border_radius="8px",
                                     margin_bottom="0.5rem",
+                                    background="rgba(255, 255, 255, 0.03)",
+                                    transition="all 0.2s ease",
+                                    _hover={
+                                        "border_color": "#10B981",
+                                        "background": "rgba(255, 255, 255, 0.05)"
+                                    }
                                 )
                             ),
                             spacing="2",
@@ -531,14 +579,26 @@ def employee_dashboard() -> rx.Component:
                     align="stretch",
                     width="100%",
                 ),
-                size="3",
-                padding="1.5rem",
+                padding="2rem",
+                border_radius="12px",
+                background="rgba(255, 255, 255, 0.05)",
+                border="1px solid rgba(16, 185, 129, 0.2)",
+                backdrop_filter="blur(10px)",
             ),
 
-            spacing="8",
+            spacing="6",
             width="100%",
-            max_width="1200px",
+            max_width="1400px",
         ),
-        padding="2rem",
+        
+        # Fondo oscuro del landing
+        background="""
+            radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+            radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+            radial-gradient(circle at 40% 80%, rgba(59, 130, 246, 0.3) 0%, transparent 50%),
+            linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%)
+        """,
+        min_height="100vh",
+        padding="3rem",
         on_mount=EmployeeDashboardState.on_mount,
     )
