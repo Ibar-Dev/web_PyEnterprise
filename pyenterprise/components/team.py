@@ -96,91 +96,79 @@ def team_section() -> rx.Component:
                     margin_bottom="5rem",
                 ),
                 
-                # Grid del equipo
-                rx.hstack(
-                    # Ibar - CEO & Backend Developer
-                    team_flip_card(
-                        name="Ibar",
-                        role="CEO & Backend Developer",
-                        skills=[
-                            "Python", "Django", "FastAPI", "PostgreSQL", 
-                            "Redis", "Docker", "AWS", "Liderazgo"
-                        ],
-                        photo_url=None,  # Se puede añadir foto después
-                    ),
-                    
-                    # Daniela - Administrativa de Ventas y Programadora
-                    team_flip_card(
-                        name="Daniela",
-                        role="Admin. Ventas & Developer",
-                        skills=[
-                            "Gestión Comercial", "Python", "JavaScript", 
-                            "CRM", "Marketing Digital", "Base de Datos"
-                        ],
-                        photo_url=None,  # Se puede añadir foto después
-                    ),
-                    
-                    # José Manuel - Frontend Developer
-                    team_flip_card(
-                        name="José Manuel",
-                        role="Frontend Developer",
-                        skills=[
-                            "React", "JavaScript", "TypeScript", "CSS3", 
-                            "HTML5", "Reflex", "UI/UX Design"
-                        ],
-                        photo_url=None,  # Se puede añadir foto después
-                    ),
-                    
-                    spacing="4",
-                    justify_content="center",
-                    wrap="wrap",
-                    width="100%",
-                ),
-                
-                # Valores del equipo
+                # Grid del equipo responsive
                 rx.box(
+                    # Versión móvil - columna vertical
                     rx.vstack(
-                        rx.heading(
-                            "Nuestros Valores",
-                            size="6",
-                            color="white",
-                            font_weight="700",
-                            margin_bottom="3rem",
+                        team_flip_card(
+                            name="Ibar",
+                            role="CEO & Backend Developer",
+                            skills=[
+                                "Python", "Django", "FastAPI", "PostgreSQL", 
+                                "Redis", "Docker", "AWS", "Liderazgo"
+                            ],
+                            photo_url=None,
                         ),
-                        rx.hstack(
-                            rx.vstack(
-                                rx.text("🤝", font_size="2.5rem", margin_bottom="1rem"),
-                                rx.text("Colaboración", color="white", font_weight="600", font_size="1.1rem"),
-                                rx.text("Trabajamos juntos", color="rgba(255, 255, 255, 0.7)", text_align="center"),
-                                align_items="center",
-                                spacing="2",
-                            ),
-                            rx.vstack(
-                                rx.text("🎯", font_size="2.5rem", margin_bottom="1rem"),
-                                rx.text("Excelencia", color="white", font_weight="600", font_size="1.1rem"),
-                                rx.text("Calidad en todo", color="rgba(255, 255, 255, 0.7)", text_align="center"),
-                                align_items="center",
-                                spacing="2",
-                            ),
-                            rx.vstack(
-                                rx.text("🚀", font_size="2.5rem", margin_bottom="1rem"),
-                                rx.text("Innovación", color="white", font_weight="600", font_size="1.1rem"),
-                                rx.text("Siempre adelante", color="rgba(255, 255, 255, 0.7)", text_align="center"),
-                                align_items="center",
-                                spacing="2",
-                            ),
-                            spacing="6",
-                            justify_content="center",
+                        team_flip_card(
+                            name="Daniela",
+                            role="Admin. Ventas & Developer",
+                            skills=[
+                                "Gestión Comercial", "Python", "JavaScript", 
+                                "CRM", "Marketing Digital", "Base de Datos"
+                            ],
+                            photo_url=None,
                         ),
+                        team_flip_card(
+                            name="José Manuel",
+                            role="Frontend Developer",
+                            skills=[
+                                "React", "JavaScript", "TypeScript", "CSS3", 
+                                "HTML5", "Reflex", "UI/UX Design"
+                            ],
+                            photo_url=None,
+                        ),
+                        spacing="6",
+                        width="100%",
                         align_items="center",
-                        spacing="4",
+                        display=["flex", "flex", "none", "none"],  # Solo visible en móvil y tablet
                     ),
-                    background="rgba(255, 255, 255, 0.05)",
-                    backdrop_filter="blur(10px)",
-                    border="1px solid rgba(255, 255, 255, 0.1)",
-                    border_radius="25px",
-                    padding="3rem",
-                    margin_top="5rem",
+                    
+                    # Versión desktop - grid horizontal
+                    rx.grid(
+                        team_flip_card(
+                            name="Ibar",
+                            role="CEO & Backend Developer",
+                            skills=[
+                                "Python", "Django", "FastAPI", "PostgreSQL", 
+                                "Redis", "Docker", "AWS", "Liderazgo"
+                            ],
+                            photo_url=None,
+                        ),
+                        team_flip_card(
+                            name="Daniela",
+                            role="Admin. Ventas & Developer",
+                            skills=[
+                                "Gestión Comercial", "Python", "JavaScript", 
+                                "CRM", "Marketing Digital", "Base de Datos"
+                            ],
+                            photo_url=None,
+                        ),
+                        team_flip_card(
+                            name="José Manuel",
+                            role="Frontend Developer",
+                            skills=[
+                                "React", "JavaScript", "TypeScript", "CSS3", 
+                                "HTML5", "Reflex", "UI/UX Design"
+                            ],
+                            photo_url=None,
+                        ),
+                        columns="3",
+                        spacing="6",
+                        width="100%",
+                        justify_items="center",
+                        display=["none", "none", "grid", "grid"],  # Solo visible en desktop
+                    ),
+                    width="100%",
                 ),
                 
                 align_items="center",

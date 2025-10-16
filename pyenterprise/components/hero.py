@@ -22,46 +22,47 @@ def hero_section() -> rx.Component:
     return rx.box(
         rx.container(
             rx.vstack(
-                # Título principal con efecto neón
+                # Título principal con efecto neón - responsive
                 rx.box(
                     rx.heading(
-                        "Conectamos tu negocio",
-                        size="9",
-                        font_weight="900",
+                        "Tu Web",
+                        size="6",
+                        font_weight=["700", "800", "900", "900"],
                         color="white",
                         text_shadow="0 0 30px rgba(59, 130, 246, 0.8)",
                         margin_bottom="0.5rem",
                         line_height="1.2",
-                        overflow="visible",
+                        font_size=["2rem", "2.5rem", "4rem", "4.5rem"],
                     ),
                     rx.heading(
-                        "con el futuro digital",
-                        size="9", 
-                        font_weight="900",
+                        "Perfecta",
+                        size="6", 
+                        font_weight=["700", "800", "900", "900"],
                         background=f"linear-gradient(45deg, {COLORS['primary']}, #00d4ff, #ff00ff)",
                         background_clip="text",
                         _webkit_background_clip="text",
                         _webkit_text_fill_color="transparent",
                         animation="glow 2s ease-in-out infinite alternate",
                         line_height="1.2",
-                        overflow="visible",
                         padding_bottom="0.3rem",
+                        font_size=["2rem", "2.5rem", "4rem", "4.5rem"],
                     ),
                     text_align="center",
                     margin_bottom="2rem",
-                    overflow="visible",
+                    width="100%",
                 ),
                 
-                # Subtítulo
+                # Subtítulo responsive
                 rx.text(
                     "Somos PyLink, una empresa joven y ambiciosa especializada en desarrollo de software. "
                     "Transformamos ideas en soluciones digitales que impulsan el crecimiento de tu empresa.",
-                    font_size="1.3rem",
+                    font_size=["1rem", "1.1rem", "1.2rem", "1.3rem"],  # Responsive
                     color="rgba(255, 255, 255, 0.9)",
                     text_align="center",
                     max_width="700px",
                     line_height="1.6",
                     margin_bottom="3rem",
+                    padding_x="1.5rem",  # Padding para móvil
                 ),
                 
                 # Botón principal
@@ -75,12 +76,13 @@ def hero_section() -> rx.Component:
                         background=f"linear-gradient(45deg, {COLORS['primary']}, #00d4ff)",
                         color="white",
                         font_weight="700",
-                        padding="18px 36px",
+                        padding="20px 40px",  # Aumentado para mejor táctil en móvil
                         border_radius="50px",
                         font_size="1.2rem",
                         border="none",
                         box_shadow="0 10px 30px rgba(59, 130, 246, 0.5)",
                         transition="all 0.3s ease",
+                        min_height="56px",  # Altura mínima para accesibilidad táctil
                         _hover={
                             "transform": "translateY(-5px) scale(1.05)",
                             "box_shadow": "0 20px 40px rgba(59, 130, 246, 0.7)",
@@ -96,7 +98,7 @@ def hero_section() -> rx.Component:
             ),
             max_width="1200px",
             margin="0 auto",
-            padding="0 2rem",
+            padding=["0 0.5rem", "0 1rem", "0 1.5rem", "0 2rem"],  # Responsive padding
         ),
         
         id="home",

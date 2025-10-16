@@ -13,7 +13,7 @@ def contact_section() -> rx.Component:
             rx.vstack(
                 # Título principal
                 rx.heading(
-                    "¿Listo para comenzar?",
+                    "Contacta con Nosotros",
                     size="8",
                     color="white",
                     font_weight="800",
@@ -21,7 +21,7 @@ def contact_section() -> rx.Component:
                     margin_bottom="1rem",
                 ),
                 rx.text(
-                    "Hablemos sobre tu próximo proyecto",
+                    "Estamos disponibles para atender tus consultas",
                     font_size="1.3rem",
                     color=COLORS["primary"],
                     text_align="center",
@@ -30,137 +30,113 @@ def contact_section() -> rx.Component:
                 
                 # Información de contacto
                 rx.grid(
-                    # Email
-                    rx.box(
-                        rx.vstack(
-                            rx.box(
-                                rx.icon(tag="mail", size=40, color=COLORS["primary"]),
-                                padding="1.5rem",
-                                background=f"linear-gradient(135deg, {COLORS['primary']}, #00d4ff)",
-                                border_radius="20px",
-                                box_shadow="0 10px 30px rgba(59, 130, 246, 0.3)",
-                                margin_bottom="1.5rem",
+                    # Email - clickable
+                    rx.link(
+                        rx.box(
+                            rx.vstack(
+                                rx.box(
+                                    rx.icon(tag="mail", size=40, color=COLORS["primary"]),
+                                    padding="1.5rem",
+                                    background=f"linear-gradient(135deg, {COLORS['primary']}, #00d4ff)",
+                                    border_radius="20px",
+                                    box_shadow="0 10px 30px rgba(59, 130, 246, 0.3)",
+                                    margin_bottom="1.5rem",
+                                ),
+                                rx.heading(
+                                    "Email",
+                                    size="5",
+                                    color="white",
+                                    font_weight="700",
+                                    margin_bottom="1rem",
+                                ),
+                                rx.text(
+                                    "hola@pylink.dev",
+                                    color="rgba(255, 255, 255, 0.8)",
+                                    font_size="1.1rem",
+                                    text_align="center",
+                                ),
+                                rx.text(
+                                    "Click para enviar email",
+                                    color=COLORS["primary"],
+                                    font_size="0.9rem",
+                                    text_align="center",
+                                    font_weight="600",
+                                    margin_top="0.5rem",
+                                ),
+                                align_items="center",
+                                spacing="3",
                             ),
-                            rx.heading(
-                                "Email",
-                                size="5",
-                                color="white",
-                                font_weight="700",
-                                margin_bottom="1rem",
-                            ),
-                            rx.text(
-                                "hola@pylink.dev",
-                                color="rgba(255, 255, 255, 0.8)",
-                                font_size="1.1rem",
-                                text_align="center",
-                            ),
-                            align_items="center",
-                            spacing="3",
+                            background="rgba(255, 255, 255, 0.05)",
+                            backdrop_filter="blur(10px)",
+                            border="1px solid rgba(255, 255, 255, 0.1)",
+                            border_radius="25px",
+                            padding="2.5rem",
+                            transition="all 0.3s ease",
+                            _hover={
+                                "transform": "translateY(-10px)",
+                                "box_shadow": "0 20px 50px rgba(59, 130, 246, 0.2)",
+                                "cursor": "pointer",
+                            },
                         ),
-                        background="rgba(255, 255, 255, 0.05)",
-                        backdrop_filter="blur(10px)",
-                        border="1px solid rgba(255, 255, 255, 0.1)",
-                        border_radius="25px",
-                        padding="2.5rem",
-                        transition="all 0.3s ease",
-                        _hover={
-                            "transform": "translateY(-10px)",
-                            "box_shadow": "0 20px 50px rgba(59, 130, 246, 0.2)",
-                        },
+                        href="mailto:hola@pylink.dev?subject=Consulta%20desde%20la%20web",
+                        _hover={"text_decoration": "none"},
                     ),
                     
-                    # Teléfono
-                    rx.box(
-                        rx.vstack(
-                            rx.box(
-                                rx.icon(tag="phone", size=40, color=COLORS["primary"]),
-                                padding="1.5rem",
-                                background=f"linear-gradient(135deg, {COLORS['primary']}, #00d4ff)",
-                                border_radius="20px",
-                                box_shadow="0 10px 30px rgba(59, 130, 246, 0.3)",
-                                margin_bottom="1.5rem",
+                    # Teléfono - clickable
+                    rx.link(
+                        rx.box(
+                            rx.vstack(
+                                rx.box(
+                                    rx.icon(tag="phone", size=40, color=COLORS["primary"]),
+                                    padding="1.5rem",
+                                    background=f"linear-gradient(135deg, {COLORS['primary']}, #00d4ff)",
+                                    border_radius="20px",
+                                    box_shadow="0 10px 30px rgba(59, 130, 246, 0.3)",
+                                    margin_bottom="1.5rem",
+                                ),
+                                rx.heading(
+                                    "Teléfono",
+                                    size="5",
+                                    color="white",
+                                    font_weight="700",
+                                    margin_bottom="1rem",
+                                ),
+                                rx.text(
+                                    "+34 900 123 456",
+                                    color="rgba(255, 255, 255, 0.8)",
+                                    font_size="1.1rem",
+                                    text_align="center",
+                                ),
+                                rx.text(
+                                    "Click para llamar",
+                                    color=COLORS["primary"],
+                                    font_size="0.9rem",
+                                    text_align="center",
+                                    font_weight="600",
+                                    margin_top="0.5rem",
+                                ),
+                                align_items="center",
+                                spacing="3",
                             ),
-                            rx.heading(
-                                "Teléfono",
-                                size="5",
-                                color="white",
-                                font_weight="700",
-                                margin_bottom="1rem",
-                            ),
-                            rx.text(
-                                "+34 900 123 456",
-                                color="rgba(255, 255, 255, 0.8)",
-                                font_size="1.1rem",
-                                text_align="center",
-                            ),
-                            align_items="center",
-                            spacing="3",
+                            background="rgba(255, 255, 255, 0.05)",
+                            backdrop_filter="blur(10px)",
+                            border="1px solid rgba(255, 255, 255, 0.1)",
+                            border_radius="25px",
+                            padding="2.5rem",
+                            transition="all 0.3s ease",
+                            _hover={
+                                "transform": "translateY(-10px)",
+                                "box_shadow": "0 20px 50px rgba(59, 130, 246, 0.2)",
+                                "cursor": "pointer",
+                            },
                         ),
-                        background="rgba(255, 255, 255, 0.05)",
-                        backdrop_filter="blur(10px)",
-                        border="1px solid rgba(255, 255, 255, 0.1)",
-                        border_radius="25px",
-                        padding="2.5rem",
-                        transition="all 0.3s ease",
-                        _hover={
-                            "transform": "translateY(-10px)",
-                            "box_shadow": "0 20px 50px rgba(59, 130, 246, 0.2)",
-                        },
+                        href="tel:+34900123456",
+                        _hover={"text_decoration": "none"},
                     ),
                     
                     columns="2",
                     spacing="6",
                     width="100%",
-                    margin_bottom="4rem",
-                ),
-                
-                # CTA Final
-                rx.box(
-                    rx.vstack(
-                        rx.text(
-                            "💡",
-                            font_size="4rem",
-                            margin_bottom="1rem",
-                        ),
-                        rx.heading(
-                            "¿Tienes una idea?",
-                            size="6",
-                            color="white",
-                            font_weight="700",
-                            text_align="center",
-                            margin_bottom="1rem",
-                        ),
-                        rx.text(
-                            "No importa qué tan grande o pequeña sea, estamos aquí para hacerla realidad",
-                            font_size="1.1rem",
-                            color="rgba(255, 255, 255, 0.8)",
-                            text_align="center",
-                            margin_bottom="2rem",
-                        ),
-                        rx.button(
-                            "Envíanos un WhatsApp",
-                            background=f"linear-gradient(45deg, #25D366, #128C7E)",
-                            color="white",
-                            font_weight="700",
-                            padding="16px 32px",
-                            border_radius="50px",
-                            font_size="1.1rem",
-                            border="none",
-                            box_shadow="0 10px 30px rgba(37, 211, 102, 0.5)",
-                            transition="all 0.3s ease",
-                            _hover={
-                                "transform": "translateY(-3px) scale(1.05)",
-                                "box_shadow": "0 20px 40px rgba(37, 211, 102, 0.7)",
-                            },
-                        ),
-                        align_items="center",
-                        spacing="4",
-                    ),
-                    background=f"linear-gradient(135deg, rgba(37, 211, 102, 0.1), rgba(18, 140, 126, 0.1))",
-                    border="1px solid rgba(37, 211, 102, 0.3)",
-                    border_radius="25px",
-                    padding="3rem",
-                    text_align="center",
                 ),
                 
                 align_items="center",

@@ -59,15 +59,37 @@ def footer() -> rx.Component:
                     rx.link("Empleados", href="/empleados", color="rgba(255, 255, 255, 0.8)", _hover={"color": COLORS["primary"]}),
                     spacing="6",
                     justify_content="center",
-                    margin_bottom="2rem",
+                    margin_bottom="1.5rem",
+                    flex_wrap="wrap",
+                ),
+                
+                # Enlaces legales
+                rx.hstack(
+                    rx.link("Privacidad", href="/privacidad", color="rgba(255, 255, 255, 0.6)", font_size="0.85rem", _hover={"color": COLORS["primary"]}),
+                    rx.text("|", color="rgba(255, 255, 255, 0.3)"),
+                    rx.link("Cookies", href="/cookies", color="rgba(255, 255, 255, 0.6)", font_size="0.85rem", _hover={"color": COLORS["primary"]}),
+                    rx.text("|", color="rgba(255, 255, 255, 0.3)"),
+                    rx.link("Términos", href="/terminos", color="rgba(255, 255, 255, 0.6)", font_size="0.85rem", _hover={"color": COLORS["primary"]}),
+                    spacing="3",
+                    justify_content="center",
+                    margin_bottom="1.5rem",
                 ),
                 
                 # Copyright
-                rx.text(
-                    f"© 2025 PyLink. Construyendo el futuro, un proyecto a la vez.",
-                    color="rgba(255, 255, 255, 0.5)",
-                    font_size="0.9rem",
-                    text_align="center",
+                rx.vstack(
+                    rx.text(
+                        f"© 2025 PyLink. Construyendo el futuro, un proyecto a la vez.",
+                        color="rgba(255, 255, 255, 0.5)",
+                        font_size="0.9rem",
+                        text_align="center",
+                    ),
+                    rx.text(
+                        "🔒 Sitio seguro con SSL/TLS | GDPR Compliance",
+                        color="rgba(94, 234, 212, 0.5)",
+                        font_size="0.8rem",
+                        text_align="center",
+                    ),
+                    spacing="1",
                 ),
                 
                 align_items="center",

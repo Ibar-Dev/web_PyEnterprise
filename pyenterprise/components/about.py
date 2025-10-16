@@ -88,26 +88,55 @@ def about_section() -> rx.Component:
                     margin_bottom="5rem",
                 ),
                 
-                # Características principales
-                rx.grid(
-                    feature_card(
-                        "Innovación",
-                        "Utilizamos las últimas tecnologías y metodologías para crear soluciones modernas y eficientes que marquen la diferencia en tu industria."
+                # Características principales - Responsive grid
+                rx.box(
+                    # Versión móvil - 1 columna
+                    rx.vstack(
+                        feature_card(
+                            "Innovación",
+                            "Utilizamos las últimas tecnologías y metodologías para crear soluciones modernas y eficientes que marquen la diferencia en tu industria."
+                        ),
+                        feature_card(
+                            "Agilidad",
+                            "Nuestro enfoque ágil nos permite adaptarnos rápidamente a los cambios y entregar resultados de calidad en tiempos record."
+                        ),
+                        feature_card(
+                            "Precisión",
+                            "Cada proyecto es único y trabajamos con precisión quirúrgica para cumplir exactamente los objetivos específicos de tu negocio."
+                        ),
+                        feature_card(
+                            "Creatividad",
+                            "Pensamos fuera de la caja para encontrar soluciones creativas e innovadoras a los problemas más complejos del desarrollo."
+                        ),
+                        spacing="5",
+                        width="100%",
+                        display=["flex", "flex", "none", "none"],  # Solo móvil y tablet pequeño
                     ),
-                    feature_card(
-                        "Agilidad",
-                        "Nuestro enfoque ágil nos permite adaptarnos rápidamente a los cambios y entregar resultados de calidad en tiempos record."
+                    
+                    # Versión desktop - 2 columnas
+                    rx.grid(
+                        feature_card(
+                            "Innovación",
+                            "Utilizamos las últimas tecnologías y metodologías para crear soluciones modernas y eficientes que marquen la diferencia en tu industria."
+                        ),
+                        feature_card(
+                            "Agilidad",
+                            "Nuestro enfoque ágil nos permite adaptarnos rápidamente a los cambios y entregar resultados de calidad en tiempos record."
+                        ),
+                        feature_card(
+                            "Precisión",
+                            "Cada proyecto es único y trabajamos con precisión quirúrgica para cumplir exactamente los objetivos específicos de tu negocio."
+                        ),
+                        feature_card(
+                            "Creatividad",
+                            "Pensamos fuera de la caja para encontrar soluciones creativas e innovadoras a los problemas más complejos del desarrollo."
+                        ),
+                        columns="2",
+                        spacing="6",
+                        width="100%",
+                        display=["none", "none", "grid", "grid"],  # Solo desktop
                     ),
-                    feature_card(
-                        "Precisión",
-                        "Cada proyecto es único y trabajamos con precisión quirúrgica para cumplir exactamente los objetivos específicos de tu negocio."
-                    ),
-                    feature_card(
-                        "Creatividad",
-                        "Pensamos fuera de la caja para encontrar soluciones creativas e innovadoras a los problemas más complejos del desarrollo."
-                    ),
-                    columns="2",
-                    spacing="6",
+                    
                     width="100%",
                     margin_bottom="5rem",
                 ),

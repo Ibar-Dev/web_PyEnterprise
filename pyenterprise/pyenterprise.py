@@ -9,11 +9,15 @@ from .components.navbar import navbar
 from .components.hero import hero_section
 from .components.about import about_section
 from .components.team import team_section
-from .components.contact import contact_section
 from .components.footer import footer
 from .components.employee_auth import employee_login_page, EmployeeAuthState
 from .components.employee_dashboard_integrated import employee_dashboard
 from .components.admin_panel_profesional import admin_panel
+from .components.cookie_banner import cookie_banner
+from .pages.privacy import privacy_policy
+from .pages.cookies import cookies_policy
+from .performance import resource_hints
+from .security import SECURITY_HEADERS
 
 
 
@@ -21,12 +25,19 @@ from .components.admin_panel_profesional import admin_panel
 def index() -> rx.Component:
     """Página principal llamativa de PyLink."""
     return rx.box(
+        # Resource hints para rendimiento
+        resource_hints(),
+        
+        # Componentes principales
         navbar(),
         hero_section(), 
         about_section(),
         team_section(),
-        contact_section(),
         footer(),
+        
+        # Banner de cookies (GDPR compliance)
+        cookie_banner(),
+        
         width="100%",
         margin="0",
         padding="0",
@@ -65,4 +76,8 @@ app.add_page(empleados_login, route="/empleados", title="PyLink - Login Empleado
 app.add_page(employee_dashboard, route="/empleados/dashboard", title="PyLink - Dashboard")
 app.add_page(admin_dashboard_page, route="/admin", title="PyLink - Panel de Administración")
 
-# La aplicación está lista para ejecutarse
+# Rutas de políticas legales
+app.add_page(privacy_policy, route="/privacidad", title="PyLink - Política de Privacidad")
+app.add_page(cookies_policy, route="/cookies", title="PyLink - Política de Cookies")
+
+# La aplicación está lista para ejecutarse con seguridad y rendimiento optimizados
