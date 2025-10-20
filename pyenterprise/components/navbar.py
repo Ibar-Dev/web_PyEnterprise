@@ -19,9 +19,9 @@ def navbar() -> rx.Component:
                             alt="PyLink Logo",
                             width="40px",
                             height="40px",
-                            object_fit="contain",  # Mantiene proporción
+                            object_fit="contain",
                         ),
-                        width="40px",  # Contenedor del mismo tamaño
+                        width="40px",
                         height="40px",
                         border_radius="50%",
                         padding="4px",
@@ -31,7 +31,7 @@ def navbar() -> rx.Component:
                         display="flex",
                         align_items="center",
                         justify_content="center",
-                        flex_shrink="0",  # No se comprime
+                        flex_shrink="0",
                         _hover={
                             "transform": "scale(1.1) rotate(5deg)",
                             "box_shadow": "0 0 30px rgba(94, 234, 212, 0.6), 0 0 60px rgba(59, 130, 246, 0.4)",
@@ -39,18 +39,19 @@ def navbar() -> rx.Component:
                     ),
                     rx.heading(
                         "PyLink",
-                        size="5",  # Reducido para móvil
+                        size="5",
                         color=COLORS["primary"],
                         font_weight="800",
                         background=f"linear-gradient(45deg, #5EEAD4, {COLORS['primary']}, #00d4ff)",
                         background_clip="text",
                         _webkit_background_clip="text",
                         _webkit_text_fill_color="transparent",
-                        white_space="nowrap",  # No se rompe
+                        white_space="nowrap",
+                        font_size=["1.2rem", "1.2rem", "1.5rem", "1.5rem"],
                     ),
                     align_items="center",
                     spacing="2",
-                    flex_shrink="0",  # Logo y título no se comprimen
+                    flex_shrink="0",
                 ),
                 
                 # Menú de navegación con botones 3D
@@ -91,7 +92,7 @@ def navbar() -> rx.Component:
                     display=["none", "none", "flex", "flex"],
                 ),
                 
-                # Iconos de contacto
+                # Iconos de contacto - Responsive
                 rx.hstack(
                     # WhatsApp
                     rx.link(
@@ -181,9 +182,8 @@ def navbar() -> rx.Component:
         top="0",
         width="100%",
         z_index="1000",
-        # Efecto glassmorphism
         background="rgba(255, 255, 255, 0.1)",
         backdrop_filter="blur(10px)",
         border_bottom="1px solid rgba(255, 255, 255, 0.2)",
-        padding=["0.75rem 0", "0.75rem 0", "1rem 0", "1rem 0"],  # Menos padding en móvil
+        padding="1rem 0",
     )

@@ -16,6 +16,9 @@ from .components.admin_panel_profesional import admin_panel
 from .components.cookie_banner import cookie_banner
 from .pages.privacy import privacy_policy
 from .pages.cookies import cookies_policy
+from .pages.terms import terms_page
+from .pages.services import services_page
+from .pages.contact import contact_page
 from .performance import resource_hints
 from .security import SECURITY_HEADERS
 
@@ -66,8 +69,16 @@ app = rx.App(
     stylesheets=[
         "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap",
         "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css",
-        "/cards.css"  # CSS personalizado para las tarjetas
-    ]
+        "/cards.css",  # CSS personalizado para las tarjetas
+        "/responsive.css",  # CSS responsive global
+    ],
+    head_components=[
+        rx.el.link(
+            rel="icon",
+            type_="image/png",
+            href="/logopylink.png",
+        ),
+    ],
 )
 
 # Rutas de la aplicación
@@ -79,5 +90,12 @@ app.add_page(admin_dashboard_page, route="/admin", title="PyLink - Panel de Admi
 # Rutas de políticas legales
 app.add_page(privacy_policy, route="/privacidad", title="PyLink - Política de Privacidad")
 app.add_page(cookies_policy, route="/cookies", title="PyLink - Política de Cookies")
+app.add_page(terms_page, route="/terminos", title="PyLink - Términos y Condiciones")
+
+# Rutas de servicios
+app.add_page(services_page, route="/servicios", title="PyLink - Nuestros Servicios")
+
+# Rutas de contacto
+app.add_page(contact_page, route="/contacto", title="PyLink - Contacto")
 
 # La aplicación está lista para ejecutarse con seguridad y rendimiento optimizados

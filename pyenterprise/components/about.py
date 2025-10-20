@@ -141,50 +141,6 @@ def about_section() -> rx.Component:
                     margin_bottom="5rem",
                 ),
                 
-                # Llamada a la acción
-                rx.box(
-                    rx.vstack(
-                        rx.heading(
-                            "¿Listo para trabajar con nosotros?",
-                            size="6",
-                            color="white",
-                            font_weight="700",
-                            text_align="center",
-                            margin_bottom="1rem",
-                        ),
-                        rx.text(
-                            "Conectemos y hagamos realidad tu próximo proyecto digital",
-                            font_size="1.1rem",
-                            color="rgba(255, 255, 255, 0.8)",
-                            text_align="center",
-                            margin_bottom="2rem",
-                        ),
-                        rx.button(
-                            "Hablemos",
-                            background=f"linear-gradient(45deg, {COLORS['primary']}, #00d4ff)",
-                            color="white",
-                            font_weight="700",
-                            padding="16px 32px",
-                            border_radius="50px",
-                            font_size="1.1rem",
-                            border="none",
-                            box_shadow="0 10px 30px rgba(59, 130, 246, 0.5)",
-                            transition="all 0.3s ease",
-                            _hover={
-                                "transform": "translateY(-3px) scale(1.05)",
-                                "box_shadow": "0 20px 40px rgba(59, 130, 246, 0.7)",
-                            },
-                        ),
-                        align_items="center",
-                        spacing="4",
-                    ),
-                    background=f"linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(0, 212, 255, 0.1))",
-                    border="1px solid rgba(59, 130, 246, 0.3)",
-                    border_radius="25px",
-                    padding="3rem",
-                    text_align="center",
-                ),
-                
                 align_items="center",
                 spacing="6",
             ),
