@@ -132,7 +132,8 @@ def about_section() -> rx.Component:
                             "Pensamos fuera de la caja para encontrar soluciones creativas e innovadoras a los problemas más complejos del desarrollo."
                         ),
                         columns="2",
-                        spacing="6",
+                        spacing="8",
+                        gap="2rem",
                         width="100%",
                         display=["none", "none", "grid", "grid"],  # Solo desktop
                     ),
