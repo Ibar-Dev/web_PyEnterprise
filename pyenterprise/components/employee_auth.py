@@ -38,6 +38,13 @@ class EmployeeAuthState(rx.State):
         self.password = password
         self.show_error = False
     
+    def clear_form(self):
+        """Limpiar completamente el formulario."""
+        self.email = ""
+        self.password = ""
+        self.error_message = ""
+        self.show_error = False
+    
     def login(self):
         """Procesar login de empleado usando Supabase."""
         # Validar que los campos no estén vacíos
@@ -196,10 +203,23 @@ def employee_login_page() -> rx.Component:
                         rx.cond(
                             EmployeeAuthState.show_error,
                             rx.box(
-                                rx.hstack(
-                                    rx.icon(tag="triangle_alert", color="#EF4444"),
-                                    rx.text(EmployeeAuthState.error_message, color="white", font_weight="600"),
+                                rx.vstack(
+                                    rx.hstack(
+                                        rx.icon(tag="triangle_alert", color="#EF4444"),
+                                        rx.text(EmployeeAuthState.error_message, color="white", font_weight="600"),
+                                        spacing="2",
+                                    ),
+                                    rx.text(
+                                        "Limpiar formulario",
+                                        color="#5EEAD4",
+                                        font_size="0.85rem",
+                                        text_decoration="underline",
+                                        cursor="pointer",
+                                        on_click=EmployeeAuthState.clear_form,
+                                        _hover={"color": "#3B82F6"},
+                                    ),
                                     spacing="2",
+                                    align="start",
                                 ),
                                 padding="1rem",
                                 border_radius="12px",
@@ -237,35 +257,20 @@ def employee_login_page() -> rx.Component:
                         width="100%",
                     ),
                     
-                    # Info de usuarios de prueba - estilo moderno
+                    # Mensaje de ayuda (sin credenciales visibles)
                     rx.box(
-                        rx.vstack(
-                            rx.hstack(
-                                rx.icon(tag="info", color="#5EEAD4"),
-                                rx.text("Credenciales de Prueba:", font_weight="700", color="white"),
-                                spacing="2",
-                            ),
-                            rx.vstack(
-                                rx.hstack(
-                                    rx.icon(tag="user", size=16, color="rgba(255, 255, 255, 0.7)"),
-                                    rx.text("Usuario: ", color="rgba(255, 255, 255, 0.7)", font_weight="600"),
-                                    rx.text("juan@pylink.com / emp123", color="white"),
-                                    spacing="2",
-                                ),
-                                rx.hstack(
-                                    rx.icon(tag="shield", size=16, color="#F59E0B"),
-                                    rx.text("Admin: ", color="rgba(255, 255, 255, 0.7)", font_weight="600"),
-                                    rx.text("admin@pylink.com / admin123", color="white"),
-                                    spacing="2",
-                                ),
-                                spacing="2",
-                                align="start",
+                        rx.hstack(
+                            rx.icon(tag="shield_check", color="#5EEAD4", size=20),
+                            rx.text(
+                                "Usa tus credenciales corporativas para acceder",
+                                color="rgba(255, 255, 255, 0.8)",
+                                font_size="0.95rem",
                             ),
                             spacing="3",
-                            align="start",
+                            align="center",
                         ),
-                        padding="1.5rem",
-                        border_radius="16px",
+                        padding="1rem",
+                        border_radius="12px",
                         background="rgba(255, 255, 255, 0.05)",
                         border="1px solid rgba(94, 234, 212, 0.2)",
                         width="100%",
