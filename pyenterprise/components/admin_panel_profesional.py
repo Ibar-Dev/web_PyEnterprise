@@ -75,6 +75,10 @@ class AdminPanelState(rx.State):
     error_message: str = ""
     show_message: bool = False
     
+    def set_active_tab(self, tab: str):
+        """Cambiar pestaña activa."""
+        self.active_tab = tab
+    
     @rx.var
     def proyectos_opciones(self) -> list[str]:
         """Lista de proyectos para el select."""
@@ -1913,7 +1917,7 @@ def admin_panel() -> rx.Component:
                             AdminPanelState.success_message != "",
                             rx.box(
                                 rx.hstack(
-                                    rx.icon(tag="check_circle", color="#10B981", size=20),
+                                    rx.icon(tag="circle_check_big", color="#10B981", size=20),
                                     rx.text(AdminPanelState.success_message, color="#064E3B", font_weight="500"),
                                     rx.button(
                                         rx.icon(tag="x", size=16),
@@ -1934,7 +1938,7 @@ def admin_panel() -> rx.Component:
                             ),
                             rx.box(
                                 rx.hstack(
-                                    rx.icon(tag="alert_circle", color="#EF4444", size=20),
+                                    rx.icon(tag="circle_alert", color="#EF4444", size=20),
                                     rx.text(AdminPanelState.error_message, color="#7F1D1D", font_weight="500"),
                                     rx.button(
                                         rx.icon(tag="x", size=16),

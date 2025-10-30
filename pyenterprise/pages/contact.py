@@ -19,11 +19,14 @@ class ContactState(rx.State):
     @rx.var
     def servicio_inicial(self) -> str:
         """Obtiene el servicio desde la URL."""
-        # Obtener parámetros de query de la URL
-        params = self.router.page.params if hasattr(self.router.page, 'params') else {}
-        servicio_param = params.get("servicio", "")
-        if servicio_param and servicio_param in SERVICIOS_MAP:
-            return SERVICIOS_MAP[servicio_param]
+        # Obtener parámetros de query de la URL usando router.session
+        try:
+            params = self.router.session.client_query if hasattr(self.router.session, 'client_query') else {}
+            servicio_param = params.get("servicio", "")
+            if servicio_param and servicio_param in SERVICIOS_MAP:
+                return SERVICIOS_MAP[servicio_param]
+        except:
+            pass
         return ""
     
     def set_nombre(self, value: str):

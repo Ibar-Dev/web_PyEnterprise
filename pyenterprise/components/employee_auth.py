@@ -4,8 +4,9 @@ Solo login - Sin registro (las credenciales las asigna el admin)
 """
 
 import reflex as rx
+from ..database import login_empleado as db_login_empleado
 from ..styles import *
-from ..database import login_empleado
+from ..utils.rate_limiter import login_rate_limiter
 
 
 class EmployeeAuthState(rx.State):
@@ -47,16 +48,43 @@ class EmployeeAuthState(rx.State):
     
     def login(self):
         """Procesar login de empleado usando Supabase."""
+        import re
+        
         # Validar que los campos no estén vacíos
         if not self.email or not self.password:
             self.error_message = "Por favor, ingresa email y contraseña"
             self.show_error = True
             return
         
+        # Validar formato de email
+        email_regex = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+        if not re.match(email_regex, self.email):
+            self.error_message = "Formato de email inválido"
+            self.show_error = True
+            return
+        
+        # Validar longitud mínima de contraseña
+        if len(self.password) < 6:
+            self.error_message = "La contraseña es demasiado corta"
+            self.show_error = True
+            return
+        
+        # Sanitizar email (quitar espacios)
+        email_limpio = self.email.strip().lower()
+        
+        # Verificar rate limiting
+        if login_rate_limiter.is_blocked(email_limpio):
+            minutos_restantes = login_rate_limiter.get_remaining_time(email_limpio)
+            self.error_message = f"Demasiados intentos. Intenta en {minutos_restantes} minutos"
+            self.show_error = True
+            return
+        
         # Intentar autenticar con Supabase
-        empleado = login_empleado(self.email, self.password)
+        empleado = db_login_empleado(email_limpio, self.password)
         
         if empleado:
+            # Login exitoso - resetear contador de intentos
+            login_rate_limiter.reset(email_limpio)
             # Login exitoso
             self.is_authenticated = True
             self.employee_name = f"{empleado['nombre']} {empleado.get('apellidos', '')}"
@@ -77,6 +105,8 @@ class EmployeeAuthState(rx.State):
                 print(f"✅ Empleado detectado: {empleado['nombre']}, redirigiendo a /empleados/dashboard")
                 return rx.redirect("/empleados/dashboard")
         else:
+            # Login fallido - registrar intento
+            login_rate_limiter.add_attempt(email_limpio)
             self.error_message = "Email o contraseña incorrectos"
             self.show_error = True
     
