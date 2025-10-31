@@ -1827,7 +1827,7 @@ def sidebar_notion() -> rx.Component:
                 # Tareas
                 rx.box(
                     rx.hstack(
-                        rx.icon(tag="check_square", size=20, color=rx.cond(AdminPanelState.active_tab == "tareas", "#5EEAD4", "rgba(255, 255, 255, 0.6)")),
+                        rx.icon(tag="square_check_big", size=20, color=rx.cond(AdminPanelState.active_tab == "tareas", "#5EEAD4", "rgba(255, 255, 255, 0.6)")),
                         rx.text("Tareas", font_weight=rx.cond(AdminPanelState.active_tab == "tareas", "600", "500"), color=rx.cond(AdminPanelState.active_tab == "tareas", "white", "rgba(255, 255, 255, 0.6)")),
                         spacing="3",
                         align="center",

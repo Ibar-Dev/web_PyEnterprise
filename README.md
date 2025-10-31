@@ -6,49 +6,43 @@ Sistema completo de gestión de proyectos, tareas y empleados desarrollado con P
 
 ```
 web_PyEnterprise/
-├── docs/                          # 📄 Documentación
-│   ├── CAMBIOS_REALIZADOS.md      # Registro de cambios recientes
-│   ├── database_schema.md         # Esquema de la base de datos
-│   ├── DOCUMENTACION_COMPLETA.md  # Documentación completa del sistema
-│   ├── ESTRUCTURA.md              # Estructura del proyecto
-│   ├── GETTING_STARTED.md         # Guía de inicio rápido
-│   └── GUIA_RAPIDA.md             # Guía de uso rápida
-│
 ├── pyenterprise/                  # 💻 Código principal
-│   ├── components/                # 🎨 Componentes del frontend
+│   ├── components/                # 🎨 Componentes UI
 │   │   ├── admin_panel_profesional.py
 │   │   ├── employee_auth.py
 │   │   ├── employee_dashboard_integrated.py
-│   │   └── ...
-│   ├── database/                  # 🗄️ Backend y acceso a datos
+│   │   ├── navbar.py, hero.py, about.py
+│   │   └── footer.py, contact.py, team.py
+│   ├── database/                  # 🗄️ Backend y BD
 │   │   ├── __init__.py
 │   │   └── supabase_client.py
-│   ├── pyenterprise.py            # App principal
-│   └── styles.py                  # Estilos globales
+│   ├── pages/                     # 📄 Páginas
+│   │   ├── contact.py, services.py
+│   │   └── privacy.py, cookies.py, terms.py
+│   ├── utils/                     # 🛠️ Utilidades
+│   │   ├── rate_limiter.py
+│   │   └── config.py
+│   ├── pyenterprise.py            # 🚀 App principal
+│   └── styles.py                  # 🎨 Estilos globales
 │
-├── tests/                         # 🧪 Tests del sistema
-│   ├── test_backend_completo.py
-│   ├── test_login.py
-│   ├── test_sistema_completo.py
-│   └── test_supabase.py
+├── tests/                         # 🧪 Tests
+│   ├── unit/                      # Tests unitarios
+│   │   ├── test_auth.py
+│   │   └── test_rate_limiter.py
+│   └── integration/               # Tests de integración
 │
 ├── scripts/                       # 🛠️ Scripts auxiliares
-│   ├── agregar_datos_prueba.py    # Agregar datos de prueba
-│   ├── asignar_admin_proyecto.py  # Asignar admin a proyecto
-│   ├── fix_passwords.py           # Actualizar contraseñas
-│   ├── seed_data.py               # Seed de datos iniciales
-│   └── manage.py                  # Script de gestión
+│   └── (scripts de gestión)
 │
-├── .web/                          # 📦 Build de Reflex (generado)
 ├── assets/                        # 🖼️ Assets estáticos
 ├── .env                           # 🔐 Variables de entorno
-├── .env.example                   # 📋 Ejemplo de variables de entorno
-├── .gitignore                     # 🚫 Archivos ignorados por Git
-├── app.py                         # 🚀 Entry point de la aplicación
-├── LICENSE                        # 📜 Licencia
-├── requirements.txt               # 📦 Dependencias de Python
-├── rxconfig.py                    # ⚙️ Configuración de Reflex
-└── setup.py                       # 📦 Setup de instalación
+├── .env.example                   # 📋 Template de config
+├── CREDENCIALES.md                # 🔑 Credenciales (confidencial)
+├── database_schema.sql            # 🗄️ Esquema de BD
+├── requirements.txt               # 📦 Dependencias
+├── rxconfig.py                    # ⚙️ Config de Reflex
+├── setup_users.py                 # 👥 Script crear usuarios
+└── README.md                      # 📖 Este archivo
 ```
 
 ## 🚀 Inicio Rápido
@@ -79,35 +73,36 @@ SUPABASE_KEY=tu-clave-publica
 reflex run
 ```
 
-La aplicación estará disponible en: **http://localhost:3000**
+## 🌐 URLs de Acceso
 
-## 🔑 Credenciales de Prueba
-
-### Administrador
+### Producción (Netlify):
 ```
-Email: admin@pylink.com
-Contraseña: admin123
-URL: http://localhost:3000/admin
+https://pylink.netlify.app/
 ```
 
-### Empleados
+### Desarrollo Local:
 ```
-Juan (Desarrollador):
-Email: juan@pylink.com
-Contraseña: emp123
+http://localhost:3000
+```
 
-María (Diseñadora):
-Email: maria@pylink.com
-Contraseña: emp123
-```
+### Rutas:
+- **Login Empleados:** `/empleados`
+- **Dashboard Empleado:** `/empleados/dashboard` (requiere login)
+- **Panel Admin:** `/admin` (requiere login como admin)
+
+## 🔑 Credenciales
+
+⚠️ **Para obtener las credenciales completas, consulta el archivo `CREDENCIALES.md`** (archivo confidencial no incluido en Git)
+
+### Ejemplo de formato de cuentas:
+- **Administradores:** `nombre.admin@pylink.com`
+- **Trabajadores:** `nombre.trabajador@pylink.com`
 
 ## 📚 Documentación
 
-- **[Documentación Completa](docs/DOCUMENTACION_COMPLETA.md)** - Guía completa del sistema
-- **[Guía Rápida](docs/GUIA_RAPIDA.md)** - Guía de uso rápida
-- **[Cambios Realizados](docs/CAMBIOS_REALIZADOS.md)** - Registro de cambios recientes
-- **[Estructura](docs/ESTRUCTURA.md)** - Estructura del proyecto
-- **[Getting Started](docs/GETTING_STARTED.md)** - Guía de inicio rápido
+- **[CREDENCIALES.md](CREDENCIALES.md)** - Credenciales de acceso (confidencial)
+- **[database_schema.sql](database_schema.sql)** - Esquema de la base de datos
+- **Tests:** Carpeta `tests/` con pruebas unitarias y de integración
 
 ## 🧪 Testing
 
