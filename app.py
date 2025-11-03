@@ -5,6 +5,7 @@ Página web empresarial desarrollada con Reflex
 
 import reflex as rx
 from pyenterprise.components.navbar import navbar
+from pyenterprise.components.smart_navbar import smart_navbar, public_navbar
 from pyenterprise.components.hero import hero_section
 from pyenterprise.components.about import about_section
 from pyenterprise.components.services import services_section
@@ -12,15 +13,17 @@ from pyenterprise.components.contact import contact_section
 from pyenterprise.components.footer import footer
 from pyenterprise.components.employee_auth import employee_login_page
 from pyenterprise.components.employee_dashboard_integrated import employee_dashboard
+from pyenterprise.components.analytics_dashboard import AnalyticsState, employee_analytics_dashboard
 from pyenterprise.components.admin_panel_profesional import admin_panel
 from shared.styles import base_style
 from shared.constants import ROUTES
+from shared.auth_utils import require_auth, require_admin
 
 
 def index() -> rx.Component:
     """Página principal de PyEnterprise."""
     return rx.box(
-        navbar(),
+        public_navbar(),
         hero_section(),
         about_section(),
         services_section(),
@@ -35,6 +38,7 @@ def index() -> rx.Component:
 def empleados() -> rx.Component:
     """Página de login para empleados."""
     return rx.box(
+        public_navbar(),
         employee_login_page(),
         width="100%",
         min_height="100vh",
@@ -44,30 +48,32 @@ def empleados() -> rx.Component:
 
 def empleado_dashboard() -> rx.Component:
     """Dashboard del empleado."""
-    return rx.box(
-        navbar(),
+    dashboard_content = rx.box(
+        smart_navbar(),
         employee_dashboard(),
         width="100%",
         min_height="100vh",
         style=base_style,
     )
+    return require_auth(dashboard_content, fallback_route="/empleados")
 
 
 def admin() -> rx.Component:
     """Panel de administración."""
-    return rx.box(
-        navbar(),
+    admin_content = rx.box(
+        smart_navbar(),
         admin_panel(),
         width="100%",
         min_height="100vh",
         style=base_style,
     )
+    return require_admin(admin_content, fallback_route="/empleados")
 
 
 def servicios() -> rx.Component:
     """Página de servicios."""
     return rx.box(
-        navbar(),
+        public_navbar(),
         services_section(),
         footer(),
         width="100%",
@@ -79,7 +85,7 @@ def servicios() -> rx.Component:
 def about() -> rx.Component:
     """Página sobre nosotros."""
     return rx.box(
-        navbar(),
+        public_navbar(),
         about_section(),
         footer(),
         width="100%",
@@ -91,13 +97,25 @@ def about() -> rx.Component:
 def contacto() -> rx.Component:
     """Página de contacto."""
     return rx.box(
-        navbar(),
+        public_navbar(),
         contact_section(),
         footer(),
         width="100%",
         min_height="100vh",
         style=base_style,
     )
+
+
+def analytics_page() -> rx.Component:
+    """Página de analíticas para empleados."""
+    analytics_content = rx.box(
+        smart_navbar(),
+        employee_analytics_dashboard(),
+        width="100%",
+        min_height="100vh",
+        style=base_style,
+    )
+    return require_auth(analytics_content, fallback_route="/empleados")
 
 
 # Configuración de la aplicación
@@ -113,6 +131,7 @@ app = rx.App(
 app.add_page(index, route=ROUTES["home"], title="PyEnterprise - Soluciones Empresariales con Python")
 app.add_page(empleados, route=ROUTES["empleados"], title="Portal de Empleados - PyEnterprise")
 app.add_page(empleado_dashboard, route=ROUTES["empleado_dashboard"], title="Dashboard Empleado - PyEnterprise")
+app.add_page(analytics_page, route="/analiticas", title="Analíticas - PyEnterprise")
 app.add_page(admin, route=ROUTES["admin"], title="Panel de Administración - PyEnterprise")
 app.add_page(servicios, route=ROUTES["services"], title="Servicios - PyEnterprise")
 app.add_page(about, route=ROUTES["about"], title="Sobre Nosotros - PyEnterprise")
